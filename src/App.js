@@ -8,11 +8,20 @@ class App extends Component {
     selectedIndex: null,
   };
 
+  addGroup = (title) => {
+    this.setState({
+      todoGroupList: [...this.state.todoGroupList, { title }],
+    });
+  };
+
   render() {
-    const { todoGroupList } = this.state;
+    const {
+      state: { todoGroupList },
+      addGroup,
+    } = this;
     return (
       <div className="App">
-        <GroupList todoGroupList={todoGroupList} />
+        <GroupList todoGroupList={todoGroupList} addGroup={addGroup} />
       </div>
     );
   }
