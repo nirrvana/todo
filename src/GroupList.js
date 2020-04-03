@@ -6,6 +6,16 @@ export default class GroupList extends Component {
     isAddMode: false,
   };
 
+  groupNameInputContainer = React.createRef();
+
+  componentDidMount() {
+    window.addEventListener('click', this.hideGroupNameInput);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.hideGroupNameInput);
+  }
+
   toggleAddMode = () => {
     this.setState({
       isAddMode: !this.state.isAddMode,
@@ -19,9 +29,24 @@ export default class GroupList extends Component {
     }
   };
 
-  renderGroupNameInput = (isAddMode, submitGroupName) => {
+  hideGroupNameInput = ({ target }) => {
+    if (
+      this.state.isAddMode &&
+      !this.groupNameInputContainer.current.contains(target)
+    ) {
+      this.setState({ isAddMode: false });
+    }
+  };
+
+  renderGroupNameInput = (isAddMode, submitGroupName, hideGroupNameInput) => {
     if (isAddMode) {
-      return <input placeholder="그룹명" onKeyDown={submitGroupName} />;
+      return (
+        <input
+          placeholder="그룹명"
+          onKeyDown={submitGroupName}
+          onClick={hideGroupNameInput}
+        />
+      );
     }
   };
 
@@ -31,11 +56,17 @@ export default class GroupList extends Component {
       state: { isAddMode },
       toggleAddMode,
       submitGroupName,
+      hideGroupNameInput,
     } = this;
+
     return (
-      <div>
+      <div ref={this.groupNameInputContainer}>
         <div onClick={toggleAddMode}>+ Add Group</div>
-        {this.renderGroupNameInput(isAddMode, submitGroupName)}
+        {this.renderGroupNameInput(
+          isAddMode,
+          submitGroupName,
+          hideGroupNameInput,
+        )}
         <ul>
           {todoGroupList.map((todoGroup, index) => (
             <GroupEntry key={index} title={todoGroup.title} />
