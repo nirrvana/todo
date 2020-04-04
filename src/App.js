@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
 import GroupList from './GroupList';
+import TodoList from './TodoList';
 
 class App extends Component {
   state = {
-    groupList: [{ name: 'sally' }, { name: 'sun' }],
+    groupList: [
+      {
+        name: 'coding',
+        todoList: [
+          { content: 'todo app', completed: false },
+          { content: 'next.js', completed: false },
+        ],
+      },
+    ],
     selectedIndex: null,
   };
 
@@ -18,9 +27,20 @@ class App extends Component {
     this.setState({ selectedIndex: index });
   };
 
+  renderTodoList = (groupList, selectedIndex) => {
+    if (selectedIndex !== null) {
+      const selectedGroup = groupList[selectedIndex];
+      const todoList = selectedGroup.todoList;
+
+      if (todoList) {
+        return <TodoList todoList={selectedGroup.todoList} />;
+      }
+    }
+  };
+
   render() {
     const {
-      state: { groupList },
+      state: { groupList, selectedIndex },
       addGroup,
       selectGroup,
     } = this;
@@ -32,6 +52,7 @@ class App extends Component {
           addGroup={addGroup}
           selectGroup={selectGroup}
         />
+        {this.renderTodoList(groupList, selectedIndex)}
       </div>
     );
   }
