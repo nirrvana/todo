@@ -21,7 +21,7 @@ class App extends Component {
     const { groupList } = this.state;
 
     this.setState({
-      groupList: [...groupList, { name }],
+      groupList: [...groupList, { name, todoList: [] }],
       selectedIndex: groupList.length,
     });
   };
@@ -30,15 +30,27 @@ class App extends Component {
     this.setState({ selectedIndex: index });
   };
 
-  renderTodoList = (groupList, selectedIndex) => {
+  renderTodoList = (groupList, selectedIndex, addTodo) => {
     if (selectedIndex !== null) {
       const selectedGroup = groupList[selectedIndex];
-      const todoList = selectedGroup.todoList;
+      const todoList = selectedGroup['todoList'];
 
-      if (todoList) {
-        return <TodoList todoList={selectedGroup.todoList} />;
-      }
+      return <TodoList todoList={todoList} addTodo={addTodo} />;
     }
+  };
+
+  addTodo = (content) => {
+    const { groupList, selectedIndex } = this.state;
+    const newTodo = { content, completed: false };
+
+    this.setState({
+      groupList: groupList.map((group, index) => {
+        if (index === selectedIndex) {
+          group.todoList = [...group.todoList, newTodo];
+        }
+        return group;
+      }),
+    });
   };
 
   render() {
@@ -46,6 +58,7 @@ class App extends Component {
       state: { groupList, selectedIndex },
       addGroup,
       selectGroup,
+      addTodo,
     } = this;
 
     return (
@@ -55,7 +68,7 @@ class App extends Component {
           addGroup={addGroup}
           selectGroup={selectGroup}
         />
-        {this.renderTodoList(groupList, selectedIndex)}
+        {this.renderTodoList(groupList, selectedIndex, addTodo)}
       </div>
     );
   }
