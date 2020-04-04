@@ -22,9 +22,9 @@ export default class GroupList extends Component {
     });
   };
 
-  submitGroupName = ({ key, target: { value: title } }) => {
+  submitGroupName = ({ key, target: { value: name } }) => {
     if (key === 'Enter') {
-      this.props.addGroup(title);
+      this.props.addGroup(name);
       this.toggleAddMode();
     }
   };
@@ -52,7 +52,7 @@ export default class GroupList extends Component {
 
   render() {
     const {
-      props: { todoGroupList },
+      props: { groupList },
       state: { isAddMode },
       toggleAddMode,
       submitGroupName,
@@ -68,8 +68,8 @@ export default class GroupList extends Component {
           hideGroupNameInput,
         )}
         <ul>
-          {todoGroupList.map((todoGroup, index) => (
-            <GroupEntry key={index} title={todoGroup.title} />
+          {groupList.map((group, index) => (
+            <GroupEntry key={index} groupName={group.name} />
           ))}
         </ul>
       </div>

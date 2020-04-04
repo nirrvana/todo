@@ -4,24 +4,24 @@ import GroupList from './GroupList';
 
 class App extends Component {
   state = {
-    todoGroupList: [{ title: 'sally' }, { title: 'sun' }],
+    groupList: [{ name: 'sally' }, { name: 'sun' }],
     selectedIndex: null,
   };
 
-  addGroup = (title) => {
+  addGroup = (name) => {
     this.setState({
-      todoGroupList: [...this.state.todoGroupList, { title }],
+      groupList: [...this.state.groupList, { name }],
     });
   };
 
   render() {
     const {
-      state: { todoGroupList },
+      state: { groupList },
       addGroup,
     } = this;
     return (
       <div className="App">
-        <GroupList todoGroupList={todoGroupList} addGroup={addGroup} />
+        <GroupList groupList={groupList} addGroup={addGroup} />
       </div>
     );
   }
