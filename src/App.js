@@ -18,8 +18,11 @@ class App extends Component {
   };
 
   addGroup = (name) => {
+    const { groupList } = this.state;
+
     this.setState({
-      groupList: [...this.state.groupList, { name }],
+      groupList: [...groupList, { name }],
+      selectedIndex: groupList.length,
     });
   };
 
