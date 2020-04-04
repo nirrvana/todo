@@ -6,7 +6,7 @@ export default class GroupList extends Component {
     isAddMode: false,
   };
 
-  groupNameInputContainer = React.createRef();
+  groupListContainer = React.createRef();
 
   componentDidMount() {
     window.addEventListener('click', this.hideGroupNameInput);
@@ -32,7 +32,7 @@ export default class GroupList extends Component {
   hideGroupNameInput = ({ target }) => {
     if (
       this.state.isAddMode &&
-      !this.groupNameInputContainer.current.contains(target)
+      !this.groupListContainer.current.contains(target)
     ) {
       this.setState({ isAddMode: false });
     }
@@ -42,7 +42,7 @@ export default class GroupList extends Component {
     if (isAddMode) {
       return (
         <input
-          placeholder="그룹명"
+          placeholder="group name"
           onKeyDown={submitGroupName}
           onClick={hideGroupNameInput}
         />
@@ -60,14 +60,14 @@ export default class GroupList extends Component {
     } = this;
 
     return (
-      <div ref={this.groupNameInputContainer}>
+      <div ref={this.groupListContainer}>
         <div onClick={toggleAddMode}>+ Add Group</div>
         {this.renderGroupNameInput(
           isAddMode,
           submitGroupName,
           hideGroupNameInput,
         )}
-        <ul>
+        <ul className="group-list__list">
           {groupList.map((group, index) => (
             <GroupEntry
               key={index}

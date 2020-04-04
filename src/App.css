@@ -1,0 +1,7 @@
+.App {
+  display: flex;
+}
+
+.group-list__entry {
+  list-style: none;
+}
