@@ -14,14 +14,24 @@ class App extends Component {
     });
   };
 
+  selectGroup = (index) => {
+    this.setState({ selectedIndex: index });
+  };
+
   render() {
     const {
       state: { groupList },
       addGroup,
+      selectGroup,
     } = this;
+
     return (
       <div className="App">
-        <GroupList groupList={groupList} addGroup={addGroup} />
+        <GroupList
+          groupList={groupList}
+          addGroup={addGroup}
+          selectGroup={selectGroup}
+        />
       </div>
     );
   }

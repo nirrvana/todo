@@ -52,7 +52,7 @@ export default class GroupList extends Component {
 
   render() {
     const {
-      props: { groupList },
+      props: { groupList, selectGroup },
       state: { isAddMode },
       toggleAddMode,
       submitGroupName,
@@ -69,7 +69,12 @@ export default class GroupList extends Component {
         )}
         <ul>
           {groupList.map((group, index) => (
-            <GroupEntry key={index} groupName={group.name} />
+            <GroupEntry
+              key={index}
+              index={index}
+              groupName={group.name}
+              selectGroup={selectGroup}
+            />
           ))}
         </ul>
       </div>
