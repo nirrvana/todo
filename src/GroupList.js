@@ -23,7 +23,7 @@ export default class GroupList extends Component {
   submitGroupName = ({ key, target: { value: name } }) => {
     if (key === 'Enter') {
       this.props.addGroup(name);
-      this.toggleAddMode();
+      this.setState({ isAddMode: false });
     }
   };
 

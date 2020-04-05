@@ -23,7 +23,7 @@ export default class TodoList extends Component {
   submitTodo = ({ key, target: { value: content } }) => {
     if (key === 'Enter') {
       this.props.addTodo(content);
-      this.toggleAddMode();
+      this.setState({ isAddMode: false });
     }
   };
 
