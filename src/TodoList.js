@@ -17,7 +17,7 @@ export default class TodoList extends Component {
   }
 
   toggleAddMode = () => {
-    this.setState({ isAddMode: !this.state.isAddMode });
+    this.setState(({ isAddMode }) => ({ isAddMode: !isAddMode }));
   };
 
   submitTodo = ({ key, target: { value: content } }) => {

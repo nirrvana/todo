@@ -17,9 +17,7 @@ export default class GroupList extends Component {
   }
 
   toggleAddMode = () => {
-    this.setState({
-      isAddMode: !this.state.isAddMode,
-    });
+    this.setState(({ isAddMode }) => ({ isAddMode: !isAddMode }));
   };
 
   submitGroupName = ({ key, target: { value: name } }) => {
