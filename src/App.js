@@ -38,17 +38,20 @@ class App extends Component {
   };
 
   addTodo = (content) => {
-    const { groupList, selectedIndex } = this.state;
     const newTodo = { content, completed: false };
 
-    this.setState({
+    this.setState(({ groupList, selectedIndex }) => ({
       groupList: groupList.map((group, index) => {
         if (index === selectedIndex) {
-          group.todoList = [...group.todoList, newTodo];
+          return {
+            ...group,
+            todoList: [...group.todoList, newTodo],
+          };
+        } else {
+          return group;
         }
-        return group;
       }),
-    });
+    }));
   };
 
   render() {
