@@ -6,7 +6,7 @@ export default class GroupList extends Component {
     isAddMode: false,
   };
 
-  groupNameInputContainer = React.createRef();
+  groupListContainer = React.createRef();
 
   componentDidMount() {
     window.addEventListener('click', this.hideGroupNameInput);
@@ -17,22 +17,20 @@ export default class GroupList extends Component {
   }
 
   toggleAddMode = () => {
-    this.setState({
-      isAddMode: !this.state.isAddMode,
-    });
+    this.setState(({ isAddMode }) => ({ isAddMode: !isAddMode }));
   };
 
   submitGroupName = ({ key, target: { value: name } }) => {
     if (key === 'Enter') {
       this.props.addGroup(name);
-      this.toggleAddMode();
+      this.setState({ isAddMode: false });
     }
   };
 
   hideGroupNameInput = ({ target }) => {
     if (
       this.state.isAddMode &&
-      !this.groupNameInputContainer.current.contains(target)
+      !this.groupListContainer.current.contains(target)
     ) {
       this.setState({ isAddMode: false });
     }
@@ -42,7 +40,7 @@ export default class GroupList extends Component {
     if (isAddMode) {
       return (
         <input
-          placeholder="그룹명"
+          placeholder="group name"
           onKeyDown={submitGroupName}
           onClick={hideGroupNameInput}
         />
@@ -52,7 +50,7 @@ export default class GroupList extends Component {
 
   render() {
     const {
-      props: { groupList },
+      props: { groupList, selectGroup },
       state: { isAddMode },
       toggleAddMode,
       submitGroupName,
@@ -60,16 +58,21 @@ export default class GroupList extends Component {
     } = this;
 
     return (
-      <div ref={this.groupNameInputContainer}>
+      <div ref={this.groupListContainer}>
         <div onClick={toggleAddMode}>+ Add Group</div>
         {this.renderGroupNameInput(
           isAddMode,
           submitGroupName,
           hideGroupNameInput,
         )}
-        <ul>
+        <ul className="group-list__list">
           {groupList.map((group, index) => (
-            <GroupEntry key={index} groupName={group.name} />
+            <GroupEntry
+              key={index}
+              index={index}
+              groupName={group.name}
+              selectGroup={selectGroup}
+            />
           ))}
         </ul>
       </div>
