@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import GroupList from './GroupList';
-import TodoList from './TodoList';
+import GroupList from './component/GroupList';
+import TodoList from './component/TodoList';
 
 class App extends Component {
   state = {
