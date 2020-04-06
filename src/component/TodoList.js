@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addTodo } from '../redux/action';
 import TodoEntry from './TodoEntry';
 
-export default class TodoList extends Component {
+class TodoList extends Component {
   state = {
     isAddMode: false,
   };
@@ -20,9 +22,9 @@ export default class TodoList extends Component {
     this.setState(({ isAddMode }) => ({ isAddMode: !isAddMode }));
   };
 
-  submitTodo = ({ key, target: { value: content } }) => {
+  submitTodo = ({ key, target: { value: content }}) => {
     if (key === 'Enter') {
-      this.props.addTodo(content);
+      this.props.dispatchAddTodo(content);
       this.setState({ isAddMode: false });
     }
   };
@@ -50,15 +52,17 @@ export default class TodoList extends Component {
 
   render() {
     const {
-      props: { todoList },
+      props: { groupList, selectedIndex },
       state: { isAddMode },
       toggleAddMode,
       submitTodo,
       hideTodoInput,
     } = this;
+    const selectedGroup = groupList[selectedIndex];
+    const todoList = selectedGroup.todoList;
 
     return (
-      <div ref={this.todoListContainer} className="sss">
+      <div ref={this.todoListContainer}>
         <ul>
           {todoList.map((todo, index) => (
             <TodoEntry key={index} todo={todo} />
@@ -70,3 +74,13 @@ export default class TodoList extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ groupList, selectedIndex }) => {
+  return { groupList, selectedIndex };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchAddTodo: (content) => dispatch(addTodo(content)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

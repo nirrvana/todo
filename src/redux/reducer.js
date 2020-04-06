@@ -1,0 +1,51 @@
+import { SELECT_GROUP, ADD_GROUP, ADD_TODO } from './action';
+
+const initialState = {
+  groupList: [
+    {
+      name: 'coding',
+      todoList: [
+        { content: 'todo app', completed: false },
+        { content: 'next.js', completed: false },
+      ],
+    },
+  ],
+  selectedIndex: null,
+};
+
+const reducer = (state = initialState, action) => {
+  let { groupList, selectedIndex } = state;
+  switch (action.type) {
+    case SELECT_GROUP:
+      return {
+        ...state,
+        selectedIndex: action.index,
+      };
+    case ADD_GROUP:
+      return {
+        ...state,
+        groupList: [...groupList, { name: action.name, todoList: [] }],
+        selectedIndex: groupList.length,
+      };
+    case ADD_TODO:
+      return {
+        ...state,
+        groupList: groupList.map((group, index) => {
+          return {
+            ...group,
+            todoList:
+              index === selectedIndex
+                ? [
+                    ...group.todoList,
+                    { content: action.content, completed: false },
+                  ]
+                : group.todoList,
+          };
+        }),
+      };
+    default:
+      return state;
+  }
+};
+
+export default reducer;
