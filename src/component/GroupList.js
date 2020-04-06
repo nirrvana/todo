@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addGroup } from '../redux/action';
 import GroupEntry from './GroupEntry';
-
-export default class GroupList extends Component {
+class GroupList extends Component {
   state = {
     isAddMode: false,
   };
@@ -22,8 +23,8 @@ export default class GroupList extends Component {
 
   submitGroupName = ({ key, target: { value: name } }) => {
     if (key === 'Enter') {
-      this.props.addGroup(name);
       this.setState({ isAddMode: false });
+      this.props.dispatchAddGroup(name);
     }
   };
 
@@ -50,7 +51,7 @@ export default class GroupList extends Component {
 
   render() {
     const {
-      props: { groupList, selectGroup },
+      props: { groupList },
       state: { isAddMode },
       toggleAddMode,
       submitGroupName,
@@ -67,15 +68,21 @@ export default class GroupList extends Component {
         )}
         <ul className="group-list__list">
           {groupList.map((group, index) => (
-            <GroupEntry
-              key={index}
-              index={index}
-              groupName={group.name}
-              selectGroup={selectGroup}
-            />
+            <GroupEntry key={index} index={index} groupName={group.name} />
           ))}
         </ul>
       </div>
     );
   }
 }
+
+const mapStateToProps = ({ groupList, selectedIndex }) => ({
+  groupList,
+  selectedIndex,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchAddGroup: (name) => dispatch(addGroup(name)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroupList);
