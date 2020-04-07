@@ -1,4 +1,10 @@
-import { SELECT_GROUP, ADD_GROUP, DELETE_GROUP, ADD_TODO } from './action';
+import {
+  SELECT_GROUP,
+  ADD_GROUP,
+  DELETE_GROUP,
+  ADD_TODO,
+  DELETE_TODO,
+} from './action';
 
 const initialState = {
   groupList: [
@@ -46,6 +52,20 @@ const reducer = (state = initialState, action) => {
                 : group.todoList,
           };
         }),
+      };
+    case DELETE_TODO:
+      return {
+        ...state,
+        groupList: groupList.map((group, index) =>
+          index === selectedIndex
+            ? {
+                ...group,
+                todoList: group.todoList.filter(
+                  (_todo, index) => index !== action.index,
+                ),
+              }
+            : group,
+        ),
       };
     default:
       return state;

@@ -22,7 +22,7 @@ class TodoList extends Component {
     this.setState(({ isAddMode }) => ({ isAddMode: !isAddMode }));
   };
 
-  submitTodo = ({ key, target: { value: content }}) => {
+  submitTodo = ({ key, target: { value: content } }) => {
     if (key === 'Enter') {
       this.props.dispatchAddTodo(content);
       this.setState({ isAddMode: false });
@@ -65,7 +65,7 @@ class TodoList extends Component {
       <div ref={this.todoListContainer}>
         <ul>
           {todoList.map((todo, index) => (
-            <TodoEntry key={index} todo={todo} />
+            <TodoEntry key={index} index={index} todo={todo} />
           ))}
         </ul>
         <div onClick={toggleAddMode}>+</div>
@@ -75,9 +75,10 @@ class TodoList extends Component {
   }
 }
 
-const mapStateToProps = ({ groupList, selectedIndex }) => {
-  return { groupList, selectedIndex };
-};
+const mapStateToProps = ({ groupList, selectedIndex }) => ({
+  groupList,
+  selectedIndex,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchAddTodo: (content) => dispatch(addTodo(content)),
