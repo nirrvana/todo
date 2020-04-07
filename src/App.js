@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './App.css';
 import GroupList from './component/GroupList';
 import TodoList from './component/TodoList';
+import './App.css';
 
 class App extends Component {
   renderTodoList = () => {
@@ -21,9 +21,6 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ groupList, selectedIndex }) => ({
-  groupList,
-  selectedIndex,
-});
+const mapStateToProps = ({ selectedIndex }) => ({ selectedIndex });
 
 export default connect(mapStateToProps)(App);
