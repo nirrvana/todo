@@ -2,6 +2,7 @@ import {
   SELECT_GROUP,
   ADD_GROUP,
   DELETE_GROUP,
+  RENAME_GROUP,
   ADD_TODO,
   DELETE_TODO,
 } from './action';
@@ -36,6 +37,13 @@ const reducer = (state = initialState, action) => {
       return {
         groupList: groupList.filter((_group, index) => index !== action.index),
         selectedIndex: null,
+      };
+    case RENAME_GROUP:
+      return {
+        ...state,
+        groupList: groupList.map((group, index) =>
+          index === action.index ? { ...group, name: action.name } : group,
+        ),
       };
     case ADD_TODO:
       return {

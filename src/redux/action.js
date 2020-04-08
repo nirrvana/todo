@@ -1,6 +1,7 @@
 export const SELECT_GROUP = 'SELECT_GROUP';
 export const ADD_GROUP = 'ADD_GROUP';
 export const DELETE_GROUP = 'DELETE_GROUP';
+export const RENAME_GROUP = 'RENAME_GROUP';
 export const ADD_TODO = 'ADD_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 
@@ -17,6 +18,12 @@ export const addGroup = (name) => ({
 export const deleteGroup = (index) => ({
   type: DELETE_GROUP,
   index,
+});
+
+export const renameGroup = (index, name) => ({
+  type: RENAME_GROUP,
+  index,
+  name,
 });
 
 export const addTodo = (content) => ({
