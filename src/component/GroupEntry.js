@@ -45,7 +45,7 @@ class GroupEntry extends Component {
       return (
         <li
           ref={this.groupNameArea}
-          className="group-list__entry"
+          className="group-entry__entry"
           onClick={() => dispatchSelectGroup(index)}
         >
           {groupName}
@@ -58,7 +58,7 @@ class GroupEntry extends Component {
     if (isEditMode && !isRenameMode) {
       return (
         <button
-          className="group-list__delete-group-button"
+          className="group-entry__delete-group-button"
           onClick={deleteGroup}
         >
           X
@@ -71,7 +71,7 @@ class GroupEntry extends Component {
     if (isEditMode && !isRenameMode) {
       return (
         <button
-          className="group-list__rename-group-button"
+          className="group-entry__rename-group-button"
           onClick={activeRenameMode}
         >
           rename
