@@ -21,8 +21,13 @@ class GroupList extends Component {
     this.setState(({ isAddMode }) => ({ isAddMode: !isAddMode }));
   };
 
+  fixEmptyGroup = (name) => {
+    return /\S/.test(name) ? name : 'Untitled';
+  };
+
   submitGroupName = ({ key, target: { value: name } }) => {
     if (key === 'Enter') {
+      name = this.fixEmptyGroup(name);
       this.setState({ isAddMode: false });
       this.props.dispatchAddGroup(name);
     }
@@ -41,6 +46,7 @@ class GroupList extends Component {
     if (isAddMode) {
       return (
         <input
+          autoFocus
           placeholder="group name"
           onKeyDown={submitGroupName}
           onClick={hideGroupNameInput}

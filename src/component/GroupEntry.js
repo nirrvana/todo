@@ -32,9 +32,14 @@ class GroupEntry extends Component {
     this.setState({ groupNameValue });
   };
 
+  fixEmptyGroup = (name) => {
+    return /\S/.test(name) ? name : 'Untitled';
+  };
+
   submitGroupName = ({ key, target: { value: name } }) => {
     const { index, dispatchRenameGroup } = this.props;
     if (key === 'Enter') {
+      name = this.fixEmptyGroup(name);
       dispatchRenameGroup(index, name);
       this.inactiveRenameMode();
     }
