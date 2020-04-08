@@ -5,6 +5,7 @@ import {
   RENAME_GROUP,
   ADD_TODO,
   DELETE_TODO,
+  UPDATE_TODO,
 } from './action';
 
 const initialState = {
@@ -70,6 +71,22 @@ const reducer = (state = initialState, action) => {
                 ...group,
                 todoList: group.todoList.filter(
                   (_todo, index) => index !== action.index,
+                ),
+              }
+            : group,
+        ),
+      };
+    case UPDATE_TODO:
+      return {
+        ...state,
+        groupList: groupList.map((group, index) =>
+          index === selectedIndex
+            ? {
+                ...group,
+                todoList: group.todoList.map((todo, index) =>
+                  index === action.index
+                    ? { ...todo, content: action.content }
+                    : todo,
                 ),
               }
             : group,
