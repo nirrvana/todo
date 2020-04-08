@@ -25,11 +25,17 @@ class TodoEntry extends Component {
     this.setState({ todoContent });
   };
 
+  isEmpty = (content) => !/\S/.test(content);
+
   submitTodo = ({ key, target: { value: content } }) => {
     const { index, dispatchUpdateTodo } = this.props;
     if (key === 'Enter') {
-      dispatchUpdateTodo(index, content);
-      this.toggleUpdateMode();
+      if (this.isEmpty(content)) {
+        window.alert('Please input todo content');
+      } else {
+        dispatchUpdateTodo(index, content);
+        this.toggleUpdateMode();
+      }
     }
   };
 
