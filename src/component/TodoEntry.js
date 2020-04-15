@@ -8,6 +8,12 @@ class TodoEntry extends Component {
     todoContent: this.props.todo.content,
   };
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return nextProps.todo.content === prevState.todoContent
+      ? null
+      : { todoContent: nextProps.todo.content };
+  }
+
   toggleEditMode = () => {
     this.setState(({ isEditMode }) => ({ isEditMode: !isEditMode }));
   };

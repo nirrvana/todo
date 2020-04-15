@@ -11,6 +11,12 @@ class GroupEntry extends Component {
 
   groupNameArea = React.createRef();
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return nextProps.groupName === prevState.groupNameValue
+      ? null
+      : { groupNameValue: nextProps.groupName };
+  }
+
   toggleEditMode = () => {
     this.setState(({ isEditMode }) => ({ isEditMode: !isEditMode }));
   };
