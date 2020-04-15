@@ -2,6 +2,7 @@ import {
   SELECT_GROUP,
   ADD_GROUP,
   DELETE_GROUP,
+  UPDATE_GROUP,
   RENAME_GROUP,
   ADD_TODO,
   DELETE_TODO,
@@ -18,11 +19,20 @@ const initialState = {
       ],
     },
   ],
+  groupListForEdit: [
+    {
+      name: 'coding',
+      todoList: [
+        { content: 'todo app', completed: false },
+        { content: 'next.js', completed: false },
+      ],
+    },
+  ],
   selectedIndex: null,
 };
 
 const reducer = (state = initialState, action) => {
-  let { groupList, selectedIndex } = state;
+  let { groupList, groupListForEdit, selectedIndex } = state;
   switch (action.type) {
     case SELECT_GROUP:
       return {
@@ -32,19 +42,31 @@ const reducer = (state = initialState, action) => {
     case ADD_GROUP:
       return {
         groupList: [...groupList, { name: action.name, todoList: [] }],
+        groupListForEdit: [
+          ...groupListForEdit,
+          { name: action.name, todoList: [] },
+        ],
         selectedIndex: groupList.length,
       };
     case DELETE_GROUP:
       return {
         groupList: groupList.filter((_group, index) => index !== action.index),
+        groupListForEdit: groupListForEdit.filter(
+          (_group, index) => index !== action.index,
+        ),
         selectedIndex: null,
+      };
+    case UPDATE_GROUP:
+      return {
+        ...state,
+        groupListForEdit: groupListForEdit.map((group, index) =>
+          index === action.index ? { ...group, name: action.name } : group,
+        ),
       };
     case RENAME_GROUP:
       return {
         ...state,
-        groupList: groupList.map((group, index) =>
-          index === action.index ? { ...group, name: action.name } : group,
-        ),
+        groupList: groupListForEdit,
       };
     case ADD_TODO:
       return {

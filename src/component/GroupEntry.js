@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { selectGroup, deleteGroup, renameGroup } from '../redux/action';
+import {
+  selectGroup,
+  deleteGroup,
+  updateGroup,
+  renameGroup,
+} from '../redux/action';
 
 class GroupEntry extends Component {
   state = {
     isEditMode: false,
     isRenameMode: false,
-    groupNameValue: this.props.groupName,
   };
 
   groupNameArea = React.createRef();
@@ -28,19 +32,21 @@ class GroupEntry extends Component {
     dispatchDeleteGroup(index);
   };
 
-  updateGroupName = ({ target: { value: groupNameValue } }) => {
-    this.setState({ groupNameValue });
+  updateGroupName = ({ target: { value: name } }) => {
+    const { index, dispatchUpdateGroup } = this.props;
+    dispatchUpdateGroup(index, name);
   };
 
-  fixEmptyGroup = (name) => {
-    return /\S/.test(name) ? name : 'Untitled';
-  };
+  isEmptyGroup = (name) => !/\S/.test(name);
 
   submitGroupName = ({ key, target: { value: name } }) => {
-    const { index, dispatchRenameGroup } = this.props;
+    const { index, dispatchUpdateGroup, dispatchRenameGroup } = this.props;
     if (key === 'Enter') {
-      name = this.fixEmptyGroup(name);
-      dispatchRenameGroup(index, name);
+      if (this.isEmptyGroup(name)) {
+        name = 'Untitled';
+        dispatchUpdateGroup(index, name);
+      }
+      dispatchRenameGroup();
       this.inactiveRenameMode();
     }
   };
@@ -87,15 +93,18 @@ class GroupEntry extends Component {
 
   renderGroupNameInput = (
     isRenameMode,
-    groupNameValue,
+    groupListForEdit,
     updateGroupName,
     submitGroupName,
   ) => {
     if (isRenameMode) {
+      let groupNameForEdit = groupListForEdit.filter(
+        (_group, index) => index === this.props.index,
+      )[0].name;
       return (
         <input
           autoFocus
-          value={groupNameValue}
+          value={groupNameForEdit}
           onChange={updateGroupName}
           onKeyDown={submitGroupName}
         />
@@ -105,8 +114,8 @@ class GroupEntry extends Component {
 
   render() {
     const {
-      props: { index, groupName, dispatchSelectGroup },
-      state: { isEditMode, isRenameMode, groupNameValue },
+      props: { index, groupName, dispatchSelectGroup, groupListForEdit },
+      state: { isEditMode, isRenameMode },
       toggleEditMode,
       activeRenameMode,
       updateGroupName,
@@ -124,7 +133,7 @@ class GroupEntry extends Component {
         )}
         {this.renderGroupNameInput(
           isRenameMode,
-          groupNameValue,
+          groupListForEdit,
           updateGroupName,
           submitGroupName,
         )}
@@ -139,10 +148,15 @@ class GroupEntry extends Component {
   }
 }
 
+const mapStateToProps = ({ groupListForEdit }) => ({
+  groupListForEdit,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   dispatchSelectGroup: (index) => dispatch(selectGroup(index)),
   dispatchDeleteGroup: (index) => dispatch(deleteGroup(index)),
-  dispatchRenameGroup: (index, name) => dispatch(renameGroup(index, name)),
+  dispatchUpdateGroup: (index, name) => dispatch(updateGroup(index, name)),
+  dispatchRenameGroup: () => dispatch(renameGroup()),
 });
 
-export default connect(null, mapDispatchToProps)(GroupEntry);
+export default connect(mapStateToProps, mapDispatchToProps)(GroupEntry);
