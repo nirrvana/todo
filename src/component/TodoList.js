@@ -22,10 +22,16 @@ class TodoList extends Component {
     this.setState(({ isAddMode }) => ({ isAddMode: !isAddMode }));
   };
 
+  isEmpty = (content) => !/\S/.test(content);
+
   submitTodo = ({ key, target: { value: content } }) => {
     if (key === 'Enter') {
-      this.props.dispatchAddTodo(content);
-      this.setState({ isAddMode: false });
+      if (this.isEmpty(content)) {
+        window.alert('please input todo content');
+      } else {
+        this.props.dispatchAddTodo(content);
+        this.setState({ isAddMode: false });
+      }
     }
   };
 
