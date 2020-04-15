@@ -98,7 +98,7 @@ class GroupEntry extends Component {
     submitGroupName,
   ) => {
     if (isRenameMode) {
-      let groupNameForEdit = groupListForEdit.filter(
+      const groupNameForEdit = groupListForEdit.filter(
         (_group, index) => index === this.props.index,
       )[0].name;
       return (

@@ -7,6 +7,7 @@ import {
   ADD_TODO,
   DELETE_TODO,
   UPDATE_TODO,
+  SUBMIT_TODO,
 } from './action';
 
 const initialState = {
@@ -83,6 +84,18 @@ const reducer = (state = initialState, action) => {
                 : group.todoList,
           };
         }),
+        groupListForEdit: groupListForEdit.map((group, index) => {
+          return {
+            ...group,
+            todoList:
+              index === selectedIndex
+                ? [
+                    ...group.todoList,
+                    { content: action.content, completed: false },
+                  ]
+                : group.todoList,
+          };
+        }),
       };
     case DELETE_TODO:
       return {
@@ -97,11 +110,21 @@ const reducer = (state = initialState, action) => {
               }
             : group,
         ),
+        groupListForEdit: groupListForEdit.map((group, index) =>
+          index === selectedIndex
+            ? {
+                ...group,
+                todoList: group.todoList.filter(
+                  (_todo, index) => index !== action.index,
+                ),
+              }
+            : group,
+        ),
       };
     case UPDATE_TODO:
       return {
         ...state,
-        groupList: groupList.map((group, index) =>
+        groupListForEdit: groupListForEdit.map((group, index) =>
           index === selectedIndex
             ? {
                 ...group,
@@ -113,6 +136,11 @@ const reducer = (state = initialState, action) => {
               }
             : group,
         ),
+      };
+    case SUBMIT_TODO:
+      return {
+        ...state,
+        groupList: groupListForEdit,
       };
     default:
       return state;

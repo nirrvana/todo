@@ -6,6 +6,7 @@ export const RENAME_GROUP = 'RENAME_GROUP';
 export const ADD_TODO = 'ADD_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 export const UPDATE_TODO = 'UPDATE_TODO';
+export const SUBMIT_TODO = 'SUBMIT_TODO';
 
 export const selectGroup = (index) => ({
   type: SELECT_GROUP,
@@ -46,4 +47,8 @@ export const updateTodo = (index, content) => ({
   type: UPDATE_TODO,
   index,
   content,
+});
+
+export const submitTodo = () => ({
+  type: SUBMIT_TODO,
 });

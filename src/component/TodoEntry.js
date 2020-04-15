@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { deleteTodo, updateTodo } from '../redux/action';
+import { deleteTodo, updateTodo, submitTodo } from '../redux/action';
 class TodoEntry extends Component {
   state = {
     isEditMode: false,
     isUpdateMode: false,
-    todoContent: this.props.todo.content,
   };
 
   toggleEditMode = () => {
@@ -21,19 +20,19 @@ class TodoEntry extends Component {
     dispatchDeleteTodo(index);
   };
 
-  updateTodoContent = ({ target: { value: todoContent } }) => {
-    this.setState({ todoContent });
+  updateTodoContent = ({ target: { value: content } }) => {
+    const { index, dispatchUpdateTodo } = this.props;
+    dispatchUpdateTodo(index, content);
   };
 
-  isEmpty = (content) => !/\S/.test(content);
+  isEmptyTodo = (content) => !/\S/.test(content);
 
-  submitTodo = ({ key, target: { value: content } }) => {
-    const { index, dispatchUpdateTodo } = this.props;
+  submitTodoContent = ({ key, target: { value: content } }) => {
     if (key === 'Enter') {
-      if (this.isEmpty(content)) {
+      if (this.isEmptyTodo(content)) {
         window.alert('Please input todo content');
       } else {
-        dispatchUpdateTodo(index, content);
+        this.props.dispatchSubmitTodo();
         this.toggleUpdateMode();
       }
     }
@@ -61,17 +60,24 @@ class TodoEntry extends Component {
 
   renderUpdateTodoInput = (
     isUpdateMode,
-    todoContent,
+    todoIndex,
     updateTodoContent,
-    submitTodo,
+    submitTodoContent,
   ) => {
     if (isUpdateMode) {
+      const { groupListForEdit, selectedIndex } = this.props;
+      const selectedGroupForEdit = groupListForEdit.filter(
+        (_group, index) => index === selectedIndex,
+      )[0];
+      const todoContentForEdit =
+        selectedGroupForEdit.todoList[todoIndex].content;
+
       return (
         <input
           autoFocus
-          value={todoContent}
+          value={todoContentForEdit}
           onChange={updateTodoContent}
-          onKeyDown={submitTodo}
+          onKeyDown={submitTodoContent}
         />
       );
     }
@@ -79,13 +85,13 @@ class TodoEntry extends Component {
 
   render() {
     const {
-      props: { todo },
-      state: { isEditMode, isUpdateMode, todoContent },
+      props: { todo, index: todoIndex },
+      state: { isEditMode, isUpdateMode },
       toggleEditMode,
       toggleUpdateMode,
       deleteTodo,
       updateTodoContent,
-      submitTodo,
+      submitTodoContent,
     } = this;
 
     return (
@@ -94,22 +100,25 @@ class TodoEntry extends Component {
         {this.renderDeleteTodoButton(isEditMode, isUpdateMode, deleteTodo)}
         {this.renderUpdateTodoInput(
           isUpdateMode,
-          todoContent,
+          todoIndex,
           updateTodoContent,
-          submitTodo,
+          submitTodoContent,
         )}
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ groupList, selectedIndex }) => {
-  return { groupList, selectedIndex };
-};
+const mapStateToProps = ({ groupList, groupListForEdit, selectedIndex }) => ({
+  groupList,
+  groupListForEdit,
+  selectedIndex,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchDeleteTodo: (content) => dispatch(deleteTodo(content)),
   dispatchUpdateTodo: (index, content) => dispatch(updateTodo(index, content)),
+  dispatchSubmitTodo: () => dispatch(submitTodo()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoEntry);
