@@ -10,7 +10,6 @@ class TodoEntry extends Component {
   state = {
     isEditMode: false,
     isUpdateMode: false,
-    isChecked: false,
   };
 
   toggleEditMode = () => {
@@ -44,21 +43,21 @@ class TodoEntry extends Component {
     }
   };
 
-  toggleChecked = () => {
-    this.setState(({ isChecked }) => ({ isChecked: !isChecked }));
-  };
+  renderTodo = (isUpdateMode, todoIndex, todo, toggleUpdateMode) => {
+    if (!isUpdateMode && !todo.completed) {
+      const { groupList, selectedIndex, dispatchCompleteTodo } = this.props;
+      const selectedGroup = groupList.filter(
+        (_group, index) => index === selectedIndex,
+      )[0];
+      const completionState = selectedGroup.todoList[todoIndex].completed;
 
-  renderTodo = (
-    isUpdateMode,
-    isChecked,
-    todo,
-    toggleUpdateMode,
-    toggleChecked,
-  ) => {
-    if (!isUpdateMode && !isChecked) {
       return (
         <div>
-          <input type="checkbox" checked={isChecked} onChange={toggleChecked} />
+          <input
+            type="checkbox"
+            checked={completionState}
+            onChange={() => dispatchCompleteTodo(todoIndex)}
+          />
           <span className="todo-entry_entry" onClick={toggleUpdateMode}>
             {todo.content}
           </span>
@@ -105,10 +104,9 @@ class TodoEntry extends Component {
   render() {
     const {
       props: { todo, index: todoIndex },
-      state: { isEditMode, isUpdateMode, isChecked },
+      state: { isEditMode, isUpdateMode },
       toggleEditMode,
       toggleUpdateMode,
-      toggleChecked,
       deleteTodo,
       updateTodoContent,
       submitTodoContent,
@@ -116,13 +114,7 @@ class TodoEntry extends Component {
 
     return (
       <div onMouseEnter={toggleEditMode} onMouseLeave={toggleEditMode}>
-        {this.renderTodo(
-          isUpdateMode,
-          isChecked,
-          todo,
-          toggleUpdateMode,
-          toggleChecked,
-        )}
+        {this.renderTodo(isUpdateMode, todoIndex, todo, toggleUpdateMode)}
         {this.renderDeleteTodoButton(isEditMode, isUpdateMode, deleteTodo)}
         {this.renderUpdateTodoInput(
           isUpdateMode,
