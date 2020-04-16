@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { deleteTodo, updateTodo, submitTodo } from '../redux/action';
+import {
+  deleteTodo,
+  updateTodo,
+  submitTodo,
+  completeTodo,
+} from '../redux/action';
 class TodoEntry extends Component {
   state = {
     isEditMode: false,
     isUpdateMode: false,
+    isChecked: false,
   };
 
   toggleEditMode = () => {
@@ -38,12 +44,25 @@ class TodoEntry extends Component {
     }
   };
 
-  renderTodo = (isUpdateMode, todo, toggleUpdateMode) => {
-    if (!isUpdateMode) {
+  toggleChecked = () => {
+    this.setState(({ isChecked }) => ({ isChecked: !isChecked }));
+  };
+
+  renderTodo = (
+    isUpdateMode,
+    isChecked,
+    todo,
+    toggleUpdateMode,
+    toggleChecked,
+  ) => {
+    if (!isUpdateMode && !isChecked) {
       return (
-        <li className="todo-entry_entry" onClick={toggleUpdateMode}>
-          {todo.content}
-        </li>
+        <div>
+          <input type="checkbox" checked={isChecked} onChange={toggleChecked} />
+          <span className="todo-entry_entry" onClick={toggleUpdateMode}>
+            {todo.content}
+          </span>
+        </div>
       );
     }
   };
@@ -86,9 +105,10 @@ class TodoEntry extends Component {
   render() {
     const {
       props: { todo, index: todoIndex },
-      state: { isEditMode, isUpdateMode },
+      state: { isEditMode, isUpdateMode, isChecked },
       toggleEditMode,
       toggleUpdateMode,
+      toggleChecked,
       deleteTodo,
       updateTodoContent,
       submitTodoContent,
@@ -96,7 +116,13 @@ class TodoEntry extends Component {
 
     return (
       <div onMouseEnter={toggleEditMode} onMouseLeave={toggleEditMode}>
-        {this.renderTodo(isUpdateMode, todo, toggleUpdateMode)}
+        {this.renderTodo(
+          isUpdateMode,
+          isChecked,
+          todo,
+          toggleUpdateMode,
+          toggleChecked,
+        )}
         {this.renderDeleteTodoButton(isEditMode, isUpdateMode, deleteTodo)}
         {this.renderUpdateTodoInput(
           isUpdateMode,
@@ -119,6 +145,7 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchDeleteTodo: (content) => dispatch(deleteTodo(content)),
   dispatchUpdateTodo: (index, content) => dispatch(updateTodo(index, content)),
   dispatchSubmitTodo: () => dispatch(submitTodo()),
+  dispatchCompleteTodo: (index) => dispatch(completeTodo(index)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoEntry);

@@ -8,6 +8,7 @@ import {
   DELETE_TODO,
   UPDATE_TODO,
   SUBMIT_TODO,
+  COMPLETE_TODO,
 } from './action';
 
 const initialState = {
@@ -141,6 +142,30 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         groupList: groupListForEdit,
+      };
+    case COMPLETE_TODO:
+      return {
+        ...state,
+        groupList: groupList.map((group, index) =>
+          index === selectedIndex
+            ? {
+                ...group,
+                todoList: group.todoList.map((todo, index) =>
+                  index === action.index ? { ...todo, completed: true } : todo,
+                ),
+              }
+            : group,
+        ),
+        groupListForEdit: groupListForEdit.map((group, index) =>
+          index === selectedIndex
+            ? {
+                ...group,
+                todoList: group.todoList.map((todo, index) =>
+                  index === action.index ? { ...todo, completed: true } : todo,
+                ),
+              }
+            : group,
+        ),
       };
     default:
       return state;
