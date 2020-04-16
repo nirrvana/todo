@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { deleteTodo, updateTodo, submitTodo } from '../redux/action';
+import {
+  deleteTodo,
+  updateTodo,
+  submitTodo,
+  completeTodo,
+} from '../redux/action';
 class TodoEntry extends Component {
   state = {
     isEditMode: false,
@@ -38,12 +43,25 @@ class TodoEntry extends Component {
     }
   };
 
-  renderTodo = (isUpdateMode, todo, toggleUpdateMode) => {
-    if (!isUpdateMode) {
+  renderTodo = (isUpdateMode, todoIndex, todo, toggleUpdateMode) => {
+    if (!isUpdateMode && !todo.completed) {
+      const { groupList, selectedIndex, dispatchCompleteTodo } = this.props;
+      const selectedGroup = groupList.filter(
+        (_group, index) => index === selectedIndex,
+      )[0];
+      const completionState = selectedGroup.todoList[todoIndex].completed;
+
       return (
-        <li className="todo-entry_entry" onClick={toggleUpdateMode}>
-          {todo.content}
-        </li>
+        <div>
+          <input
+            type="checkbox"
+            checked={completionState}
+            onChange={() => dispatchCompleteTodo(todoIndex)}
+          />
+          <span className="todo-entry_entry" onClick={toggleUpdateMode}>
+            {todo.content}
+          </span>
+        </div>
       );
     }
   };
@@ -96,7 +114,7 @@ class TodoEntry extends Component {
 
     return (
       <div onMouseEnter={toggleEditMode} onMouseLeave={toggleEditMode}>
-        {this.renderTodo(isUpdateMode, todo, toggleUpdateMode)}
+        {this.renderTodo(isUpdateMode, todoIndex, todo, toggleUpdateMode)}
         {this.renderDeleteTodoButton(isEditMode, isUpdateMode, deleteTodo)}
         {this.renderUpdateTodoInput(
           isUpdateMode,
@@ -119,6 +137,7 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchDeleteTodo: (content) => dispatch(deleteTodo(content)),
   dispatchUpdateTodo: (index, content) => dispatch(updateTodo(index, content)),
   dispatchSubmitTodo: () => dispatch(submitTodo()),
+  dispatchCompleteTodo: (index) => dispatch(completeTodo(index)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoEntry);
