@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addGroup } from '../redux/action';
 import GroupEntry from './GroupEntry';
+
 class GroupList extends Component {
   state = {
     isAddMode: false,
@@ -65,7 +66,7 @@ class GroupList extends Component {
     } = this;
 
     return (
-      <div ref={this.groupListContainer}>
+      <div className="group-list-container" ref={this.groupListContainer}>
         <div onClick={toggleAddMode}>+ Add Group</div>
         {this.renderGroupNameInput(
           isAddMode,

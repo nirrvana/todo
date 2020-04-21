@@ -68,7 +68,7 @@ class TodoList extends Component {
     const todoList = selectedGroup.todoList;
 
     return (
-      <div ref={this.todoListContainer}>
+      <div className="todo-list-container" ref={this.todoListContainer}>
         <ul>
           {todoList.map((todo, index) => (
             <TodoEntry key={index} index={index} todo={todo} />

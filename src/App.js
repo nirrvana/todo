@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import GroupList from './component/GroupList';
 import TodoList from './component/TodoList';
+import { Container, Row, Col } from 'react-bootstrap';
 import './App.css';
 
 class App extends Component {
@@ -13,10 +14,14 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <GroupList />
-        {this.renderTodoList()}
-      </div>
+      <Container className="app-container">
+        <Row noGutters={true}>
+          <Col md={3}>
+            <GroupList />
+          </Col>
+          <Col md={9}>{this.renderTodoList()}</Col>
+        </Row>
+      </Container>
     );
   }
 }
