@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addTodo } from '../redux/action';
 import TodoEntry from './TodoEntry';
+import { Container, Row } from 'react-bootstrap';
 
 class TodoList extends Component {
   state = {
@@ -44,15 +45,25 @@ class TodoList extends Component {
     }
   };
 
-  renderTodoInput = (isAddMode, submitTodo, hideTodoInput) => {
+  renderTodoInput = (submitTodo, hideTodoInput) => {
+    return (
+      <input
+        autoFocus
+        className="todo-list-container__input"
+        placeholder="todo"
+        onKeyDown={submitTodo}
+        onClick={hideTodoInput}
+      />
+    );
+  };
+
+  renderListOrInput = (isAddMode, submitTodo, hideTodoInput, todoList) => {
     if (isAddMode) {
-      return (
-        <input
-          placeholder="todo"
-          onKeyDown={submitTodo}
-          onClick={hideTodoInput}
-        />
-      );
+      return this.renderTodoInput(submitTodo, hideTodoInput);
+    } else {
+      return todoList.map((todo, index) => (
+        <TodoEntry key={index} index={index} todo={todo} />
+      ));
     }
   };
 
@@ -68,15 +79,22 @@ class TodoList extends Component {
     const todoList = selectedGroup.todoList;
 
     return (
-      <div className="todo-list-container" ref={this.todoListContainer}>
-        <ul>
-          {todoList.map((todo, index) => (
-            <TodoEntry key={index} index={index} todo={todo} />
-          ))}
-        </ul>
-        <div onClick={toggleAddMode}>+</div>
-        {this.renderTodoInput(isAddMode, submitTodo, hideTodoInput)}
-      </div>
+      <Container className="todo-list-container" ref={this.todoListContainer}>
+        <Row
+          className="todo-list-container__add-button"
+          onClick={toggleAddMode}
+        >
+          +
+        </Row>
+        <Row className="todo-list-container__list">
+          {this.renderListOrInput(
+            isAddMode,
+            submitTodo,
+            hideTodoInput,
+            todoList,
+          )}
+        </Row>
+      </Container>
     );
   }
 }

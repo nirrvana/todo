@@ -49,3 +49,21 @@
   border: 3px solid blue;
   height: 100vh;
 }
+
+.todo-list-container__add-button {
+  border: 3px dotted royalblue;
+  background-color: lightcyan;
+  height: 5vh;
+}
+
+.todo-list-container__list {
+  border: 3px dotted royalblue;
+  background-color: lightcyan;
+  height: 95vh;
+
+}
+
+.todo-list-container__input {
+  width: 100%;
+  height: 15vh;
+}
