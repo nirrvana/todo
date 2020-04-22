@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addGroup } from '../redux/action';
 import GroupEntry from './GroupEntry';
+import { Container, Row } from 'react-bootstrap';
 
 class GroupList extends Component {
   state = {
@@ -49,6 +50,7 @@ class GroupList extends Component {
         <input
           autoFocus
           placeholder="group name"
+          className="group-list-container__group-name-input"
           onKeyDown={submitGroupName}
           onClick={hideGroupNameInput}
         />
@@ -66,19 +68,30 @@ class GroupList extends Component {
     } = this;
 
     return (
-      <div className="group-list-container" ref={this.groupListContainer}>
-        <div onClick={toggleAddMode}>+ Add Group</div>
-        {this.renderGroupNameInput(
-          isAddMode,
-          submitGroupName,
-          hideGroupNameInput,
-        )}
-        <ul className="group-list__list">
-          {groupList.map((group, index) => (
-            <GroupEntry key={index} index={index} groupName={group.name} />
-          ))}
-        </ul>
-      </div>
+      <Container className="group-list-container" ref={this.groupListContainer}>
+        <Row className="group-list-container__wrapper">
+          <div
+            className="group-list-container__add-button"
+            onClick={toggleAddMode}
+          >
+            + Add Group
+          </div>
+        </Row>
+        <Row className="group-list-container__wrapper">
+          {this.renderGroupNameInput(
+            isAddMode,
+            submitGroupName,
+            hideGroupNameInput,
+          )}
+        </Row>
+        <Row className="group-list-container__wrapper">
+          <ul className="group-list-container__list">
+            {groupList.map((group, index) => (
+              <GroupEntry key={index} index={index} groupName={group.name} />
+            ))}
+          </ul>
+        </Row>
+      </Container>
     );
   }
 }
