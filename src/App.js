@@ -15,7 +15,7 @@ class App extends Component {
   render() {
     return (
       <Container className="app-container">
-        <Row noGutters={true}>
+        <Row noGutters={true} className="app-container__wrapper">
           <Col md={3}>
             <GroupList />
           </Col>

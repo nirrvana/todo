@@ -4,6 +4,10 @@
   padding: 0;
 }
 
+.app-container__wrapper {
+  border: 5px solid yellowgreen;
+}
+
 /* group-list */
 .group-list-container {
   border: 3px solid red;
@@ -31,6 +35,13 @@
   border: 3px dotted lightseagreen;
   margin-bottom: 0;
   width: 100%;
+}
+
+/* group-entry */
+.group-entry-wrapper__name,
+.group-entry-wrapper__delete-button,
+.group-entry-wrapper__rename-button {
+  border: 3px solid teal;
 }
 
 /* todo-list */

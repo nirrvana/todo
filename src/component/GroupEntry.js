@@ -6,6 +6,7 @@ import {
   updateGroup,
   renameGroup,
 } from '../redux/action';
+import { Row, Col } from 'react-bootstrap';
 
 class GroupEntry extends Component {
   state = {
@@ -14,10 +15,6 @@ class GroupEntry extends Component {
   };
 
   groupNameArea = React.createRef();
-
-  toggleEditMode = () => {
-    this.setState(({ isEditMode }) => ({ isEditMode: !isEditMode }));
-  };
 
   activeRenameMode = () => {
     this.setState({ isRenameMode: true });
@@ -54,13 +51,13 @@ class GroupEntry extends Component {
   renderGroupName = (index, groupName, isRenameMode, dispatchSelectGroup) => {
     if (!isRenameMode) {
       return (
-        <li
+        <div
           ref={this.groupNameArea}
-          className="group-entry__entry"
+          className="group-entry-wrapper__name"
           onClick={() => dispatchSelectGroup(index)}
         >
           {groupName}
-        </li>
+        </div>
       );
     }
   };
@@ -69,7 +66,7 @@ class GroupEntry extends Component {
     if (isEditMode && !isRenameMode) {
       return (
         <button
-          className="group-entry__delete-group-button"
+          className="group-entry-wrapper__delete-button"
           onClick={deleteGroup}
         >
           X
@@ -82,7 +79,7 @@ class GroupEntry extends Component {
     if (isEditMode && !isRenameMode) {
       return (
         <button
-          className="group-entry__rename-group-button"
+          className="group-entry-wrapper__rename-button"
           onClick={activeRenameMode}
         >
           rename
@@ -92,59 +89,76 @@ class GroupEntry extends Component {
   };
 
   renderGroupNameInput = (
-    isRenameMode,
     groupListForEdit,
     updateGroupName,
     submitGroupName,
   ) => {
-    if (isRenameMode) {
-      const groupNameForEdit = groupListForEdit.filter(
-        (_group, index) => index === this.props.index,
-      )[0].name;
-      return (
-        <input
-          autoFocus
-          value={groupNameForEdit}
-          onChange={updateGroupName}
-          onKeyDown={submitGroupName}
-        />
-      );
-    }
+    const groupNameForEdit = groupListForEdit.filter(
+      (_group, index) => index === this.props.index,
+    )[0].name;
+    return (
+      <input
+        autoFocus
+        value={groupNameForEdit}
+        onChange={updateGroupName}
+        onKeyDown={submitGroupName}
+      />
+    );
   };
 
   render() {
     const {
       props: { index, groupName, dispatchSelectGroup, groupListForEdit },
       state: { isEditMode, isRenameMode },
-      toggleEditMode,
       activeRenameMode,
       updateGroupName,
       submitGroupName,
       deleteGroup,
     } = this;
 
-    return (
-      <div onMouseEnter={toggleEditMode} onMouseLeave={toggleEditMode}>
-        {this.renderGroupName(
-          index,
-          groupName,
-          isRenameMode,
-          dispatchSelectGroup,
-        )}
-        {this.renderGroupNameInput(
-          isRenameMode,
-          groupListForEdit,
-          updateGroupName,
-          submitGroupName,
-        )}
-        {this.renderGroupDeleteButton(isEditMode, isRenameMode, deleteGroup)}
-        {this.renderGroupRenameButton(
-          isEditMode,
-          isRenameMode,
-          activeRenameMode,
-        )}
-      </div>
-    );
+    if (isRenameMode) {
+      return (
+        <Row>
+          {this.renderGroupNameInput(
+            groupListForEdit,
+            updateGroupName,
+            submitGroupName,
+          )}
+        </Row>
+      );
+    } else {
+      return (
+        <Row
+          noGutters={true}
+          className="group-entry-wrapper"
+          onMouseEnter={() => this.setState({ isEditMode: true })}
+          onMouseLeave={() => this.setState({ isEditMode: false })}
+        >
+          <Col md={6}>
+            {this.renderGroupName(
+              index,
+              groupName,
+              isRenameMode,
+              dispatchSelectGroup,
+            )}
+          </Col>
+          <Col md={2}>
+            {this.renderGroupDeleteButton(
+              isEditMode,
+              isRenameMode,
+              deleteGroup,
+            )}
+          </Col>
+          <Col md={4}>
+            {this.renderGroupRenameButton(
+              isEditMode,
+              isRenameMode,
+              activeRenameMode,
+            )}
+          </Col>
+        </Row>
+      );
+    }
   }
 }
 

@@ -85,11 +85,11 @@ class GroupList extends Component {
           )}
         </Row>
         <Row className="group-list-container__wrapper">
-          <ul className="group-list-container__list">
+          <div className="group-list-container__list">
             {groupList.map((group, index) => (
               <GroupEntry key={index} index={index} groupName={group.name} />
             ))}
-          </ul>
+          </div>
         </Row>
       </Container>
     );
