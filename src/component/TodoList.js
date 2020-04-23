@@ -86,7 +86,9 @@ class TodoList extends Component {
         >
           +
         </Row>
-        <Row className="todo-list-container__list">
+        <Row 
+        noGutters={true} 
+        className="todo-list-container__list">
           {this.renderListOrInput(
             isAddMode,
             submitTodo,
