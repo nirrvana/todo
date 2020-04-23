@@ -88,6 +88,7 @@ class GroupEntry extends Component {
 
     return (
       <input
+        className="group-entry-wrapper__input"
         autoFocus
         value={groupNameForEdit}
         onChange={this.updateGroupName}
@@ -100,7 +101,11 @@ class GroupEntry extends Component {
     const { isEditMode, isRenameMode } = this.state;
 
     if (isRenameMode) {
-      return <Row>{this.renderGroupNameInput()}</Row>;
+      return (
+        <Row noGutters={true} className="group-entry-wrapper">
+          {this.renderGroupNameInput()}
+        </Row>
+      );
     } else {
       return (
         <Row

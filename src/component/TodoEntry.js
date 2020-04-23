@@ -95,12 +95,15 @@ class TodoEntry extends Component {
     const todoContentForEdit = selectedGroupForEdit.todoList[todoIndex].content;
 
     return (
-      <input
-        autoFocus
-        value={todoContentForEdit}
-        onChange={this.updateTodoContent}
-        onKeyDown={this.submitTodoContent}
-      />
+      <Col md={10}>
+        <input
+          className="todo-entry-wrapper__input"
+          autoFocus
+          value={todoContentForEdit}
+          onChange={this.updateTodoContent}
+          onKeyDown={this.submitTodoContent}
+        />
+      </Col>
     );
   };
 
@@ -118,6 +121,7 @@ class TodoEntry extends Component {
   render() {
     return (
       <Row
+        noGutters={true}
         className="todo-entry-wrapper"
         onMouseEnter={() => this.setState({ isEditMode: true })}
         onMouseLeave={() => this.setState({ isEditMode: false })}
