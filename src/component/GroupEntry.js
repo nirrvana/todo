@@ -16,19 +16,6 @@ class GroupEntry extends Component {
 
   groupNameArea = React.createRef();
 
-  activeRenameMode = () => {
-    this.setState({ isRenameMode: true });
-  };
-
-  inactiveRenameMode = () => {
-    this.setState({ isRenameMode: false });
-  };
-
-  deleteGroup = () => {
-    const { index, dispatchDeleteGroup } = this.props;
-    dispatchDeleteGroup(index);
-  };
-
   updateGroupName = ({ target: { value: name } }) => {
     const { index, dispatchUpdateGroup } = this.props;
     dispatchUpdateGroup(index, name);
@@ -38,17 +25,20 @@ class GroupEntry extends Component {
 
   submitGroupName = ({ key, target: { value: name } }) => {
     const { index, dispatchUpdateGroup, dispatchRenameGroup } = this.props;
+
     if (key === 'Enter') {
       if (this.isEmptyGroup(name)) {
         name = 'Untitled';
         dispatchUpdateGroup(index, name);
       }
       dispatchRenameGroup();
-      this.inactiveRenameMode();
+      this.setState({ isRenameMode: false });
     }
   };
 
-  renderGroupName = (index, groupName, isRenameMode, dispatchSelectGroup) => {
+  renderGroupName = (isRenameMode) => {
+    const { index, groupName, dispatchSelectGroup } = this.props;
+
     if (!isRenameMode) {
       return (
         <div
@@ -62,12 +52,14 @@ class GroupEntry extends Component {
     }
   };
 
-  renderGroupDeleteButton = (isEditMode, isRenameMode, deleteGroup) => {
+  renderGroupDeleteButton = (isEditMode, isRenameMode) => {
+    const { index, dispatchDeleteGroup } = this.props;
+
     if (isEditMode && !isRenameMode) {
       return (
         <button
           className="group-entry-wrapper__delete-button"
-          onClick={deleteGroup}
+          onClick={() => dispatchDeleteGroup(index)}
         >
           X
         </button>
@@ -75,12 +67,12 @@ class GroupEntry extends Component {
     }
   };
 
-  renderGroupRenameButton = (isEditMode, isRenameMode, activeRenameMode) => {
+  renderGroupRenameButton = (isEditMode, isRenameMode) => {
     if (isEditMode && !isRenameMode) {
       return (
         <button
           className="group-entry-wrapper__rename-button"
-          onClick={activeRenameMode}
+          onClick={() => this.setState({ isRenameMode: true })}
         >
           rename
         </button>
@@ -88,44 +80,27 @@ class GroupEntry extends Component {
     }
   };
 
-  renderGroupNameInput = (
-    groupListForEdit,
-    updateGroupName,
-    submitGroupName,
-  ) => {
+  renderGroupNameInput = () => {
+    const { groupListForEdit } = this.props;
     const groupNameForEdit = groupListForEdit.filter(
       (_group, index) => index === this.props.index,
     )[0].name;
+
     return (
       <input
         autoFocus
         value={groupNameForEdit}
-        onChange={updateGroupName}
-        onKeyDown={submitGroupName}
+        onChange={this.updateGroupName}
+        onKeyDown={this.submitGroupName}
       />
     );
   };
 
   render() {
-    const {
-      props: { index, groupName, dispatchSelectGroup, groupListForEdit },
-      state: { isEditMode, isRenameMode },
-      activeRenameMode,
-      updateGroupName,
-      submitGroupName,
-      deleteGroup,
-    } = this;
+    const { isEditMode, isRenameMode } = this.state;
 
     if (isRenameMode) {
-      return (
-        <Row>
-          {this.renderGroupNameInput(
-            groupListForEdit,
-            updateGroupName,
-            submitGroupName,
-          )}
-        </Row>
-      );
+      return <Row>{this.renderGroupNameInput()}</Row>;
     } else {
       return (
         <Row
@@ -134,27 +109,12 @@ class GroupEntry extends Component {
           onMouseEnter={() => this.setState({ isEditMode: true })}
           onMouseLeave={() => this.setState({ isEditMode: false })}
         >
-          <Col md={6}>
-            {this.renderGroupName(
-              index,
-              groupName,
-              isRenameMode,
-              dispatchSelectGroup,
-            )}
-          </Col>
+          <Col md={6}>{this.renderGroupName(isRenameMode)}</Col>
           <Col md={2}>
-            {this.renderGroupDeleteButton(
-              isEditMode,
-              isRenameMode,
-              deleteGroup,
-            )}
+            {this.renderGroupDeleteButton(isEditMode, isRenameMode)}
           </Col>
           <Col md={4}>
-            {this.renderGroupRenameButton(
-              isEditMode,
-              isRenameMode,
-              activeRenameMode,
-            )}
+            {this.renderGroupRenameButton(isEditMode, isRenameMode)}
           </Col>
         </Row>
       );
