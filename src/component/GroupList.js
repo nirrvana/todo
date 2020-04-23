@@ -44,15 +44,15 @@ class GroupList extends Component {
     }
   };
 
-  renderGroupNameInput = (isAddMode, submitGroupName, hideGroupNameInput) => {
+  renderGroupNameInput = (isAddMode) => {
     if (isAddMode) {
       return (
         <input
           autoFocus
           placeholder="group name"
-          className="group-list-container__group-name-input"
-          onKeyDown={submitGroupName}
-          onClick={hideGroupNameInput}
+          className="group-list-container__input"
+          onKeyDown={this.submitGroupName}
+          onClick={this.hideGroupNameInput}
         />
       );
     }
@@ -62,9 +62,6 @@ class GroupList extends Component {
     const {
       props: { groupList },
       state: { isAddMode },
-      toggleAddMode,
-      submitGroupName,
-      hideGroupNameInput,
     } = this;
 
     return (
@@ -72,17 +69,13 @@ class GroupList extends Component {
         <Row className="group-list-container__wrapper">
           <div
             className="group-list-container__add-button"
-            onClick={toggleAddMode}
+            onClick={this.toggleAddMode}
           >
             + Add Group
           </div>
         </Row>
         <Row className="group-list-container__wrapper">
-          {this.renderGroupNameInput(
-            isAddMode,
-            submitGroupName,
-            hideGroupNameInput,
-          )}
+          {this.renderGroupNameInput(isAddMode)}
         </Row>
         <Row className="group-list-container__wrapper">
           <div className="group-list-container__list">
