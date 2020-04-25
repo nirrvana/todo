@@ -6,18 +6,12 @@ import {
   submitTodo,
   completeTodo,
 } from '../redux/action';
+import { Row, Col } from 'react-bootstrap';
+
 class TodoEntry extends Component {
   state = {
     isEditMode: false,
     isUpdateMode: false,
-  };
-
-  toggleEditMode = () => {
-    this.setState(({ isEditMode }) => ({ isEditMode: !isEditMode }));
-  };
-
-  toggleUpdateMode = () => {
-    this.setState(({ isUpdateMode }) => ({ isUpdateMode: !isUpdateMode }));
   };
 
   deleteTodo = () => {
@@ -38,91 +32,102 @@ class TodoEntry extends Component {
         window.alert('Please input todo content');
       } else {
         this.props.dispatchSubmitTodo();
-        this.toggleUpdateMode();
+        this.setState({ isUpdateMode: false });
       }
     }
   };
 
-  renderTodo = (isUpdateMode, todoIndex, todo, toggleUpdateMode) => {
-    if (!isUpdateMode && !todo.completed) {
-      const { groupList, selectedIndex, dispatchCompleteTodo } = this.props;
-      const selectedGroup = groupList.filter(
-        (_group, index) => index === selectedIndex,
-      )[0];
-      const completionState = selectedGroup.todoList[todoIndex].completed;
+  renderTodo = () => {
+    const {
+      index: todoIndex,
+      todo,
+      groupList,
+      selectedIndex,
+      dispatchCompleteTodo,
+    } = this.props;
+    const selectedGroup = groupList.filter(
+      (_group, index) => index === selectedIndex,
+    )[0];
+    const completionState = selectedGroup.todoList[todoIndex].completed;
 
-      return (
-        <div>
+    return (
+      <Row noGutters={true} className="todo-entry-wrapper__todo">
+        <Col md={1}>
           <input
+            className="todo-entry-wrapper__check-box"
             type="checkbox"
             checked={completionState}
             onChange={() => dispatchCompleteTodo(todoIndex)}
           />
-          <span className="todo-entry_entry" onClick={toggleUpdateMode}>
+        </Col>
+        <Col md={10}>
+          <div
+            className="todo-entry-wrapper__content"
+            onClick={() => this.setState({ isUpdateMode: true })}
+          >
             {todo.content}
-          </span>
-        </div>
-      );
-    }
+          </div>
+        </Col>
+        <Col md={1}>{this.renderDeleteTodoButton()}</Col>
+      </Row>
+    );
   };
 
-  renderDeleteTodoButton = (isEditMode, isUpdateMode, deleteTodo) => {
+  renderDeleteTodoButton = () => {
+    const { isEditMode, isUpdateMode } = this.state;
     if (isEditMode && !isUpdateMode) {
       return (
-        <button className="todo-entry__delete-todo-button" onClick={deleteTodo}>
+        <button
+          className="todo-entry__delete-todo-button"
+          onClick={this.deleteTodo}
+        >
           X
         </button>
       );
     }
   };
 
-  renderUpdateTodoInput = (
-    isUpdateMode,
-    todoIndex,
-    updateTodoContent,
-    submitTodoContent,
-  ) => {
-    if (isUpdateMode) {
-      const { groupListForEdit, selectedIndex } = this.props;
-      const selectedGroupForEdit = groupListForEdit.filter(
-        (_group, index) => index === selectedIndex,
-      )[0];
-      const todoContentForEdit =
-        selectedGroupForEdit.todoList[todoIndex].content;
+  renderTodoInput = () => {
+    const { index: todoIndex, groupListForEdit, selectedIndex } = this.props;
+    const selectedGroupForEdit = groupListForEdit.filter(
+      (_group, index) => index === selectedIndex,
+    )[0];
+    const todoContentForEdit = selectedGroupForEdit.todoList[todoIndex].content;
 
-      return (
+    return (
+      <Col md={10}>
         <input
+          className="todo-entry-wrapper__input"
           autoFocus
           value={todoContentForEdit}
-          onChange={updateTodoContent}
-          onKeyDown={submitTodoContent}
+          onChange={this.updateTodoContent}
+          onKeyDown={this.submitTodoContent}
         />
-      );
+      </Col>
+    );
+  };
+
+  renderTodoOrInput = () => {
+    const { todo } = this.props;
+    const { isUpdateMode } = this.state;
+
+    if (isUpdateMode) {
+      return this.renderTodoInput();
+    } else if (!isUpdateMode && !todo.completed) {
+      return this.renderTodo();
     }
   };
 
   render() {
-    const {
-      props: { todo, index: todoIndex },
-      state: { isEditMode, isUpdateMode },
-      toggleEditMode,
-      toggleUpdateMode,
-      deleteTodo,
-      updateTodoContent,
-      submitTodoContent,
-    } = this;
-
     return (
-      <div onMouseEnter={toggleEditMode} onMouseLeave={toggleEditMode}>
-        {this.renderTodo(isUpdateMode, todoIndex, todo, toggleUpdateMode)}
-        {this.renderDeleteTodoButton(isEditMode, isUpdateMode, deleteTodo)}
-        {this.renderUpdateTodoInput(
-          isUpdateMode,
-          todoIndex,
-          updateTodoContent,
-          submitTodoContent,
-        )}
-      </div>
+      <Row
+        noGutters={true}
+        className="todo-entry-wrapper"
+        onMouseEnter={() => this.setState({ isEditMode: true })}
+        onMouseLeave={() => this.setState({ isEditMode: false })}
+      >
+        {this.renderTodoOrInput()}
+      </Row>
     );
   }
 }

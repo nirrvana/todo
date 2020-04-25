@@ -1,7 +1,98 @@
-.App {
-  display: flex;
+/* app */
+.app-container {
+  border: 3px solid black;
+  padding: 0;
 }
 
-.group-list__entry {
-  list-style: none;
+.app-container__wrapper {
+  border: 5px solid yellowgreen;
+}
+
+/* group-list */
+.group-list-container {
+  border: 3px solid red;
+  height: 100vh;
+  width: 100%;
+}
+
+.group-list-container__wrapper {
+  border: 3px solid goldenrod;
+  background-color: lemonchiffon;
+  margin: 0;
+}
+
+.group-list-container__add-button {
+  border: 3px dotted darkorchid;
+  width: 100%;
+}
+
+.group-list-container__input {
+  border: 3px dotted orchid;
+  width: 100%;
+}
+
+.group-list-container__list {
+  border: 3px dotted lightseagreen;
+  margin-bottom: 0;
+  width: 100%;
+}
+
+/* group-entry */
+.group-entry-wrapper__name,
+.group-entry-wrapper__delete-button,
+.group-entry-wrapper__rename-button {
+  border: 3px solid teal;
+}
+
+.group-entry-wrapper__input {
+  border: 3px solid saddlebrown;
+  width: 100%;
+}
+
+/* todo-list */
+.todo-list-container {
+  border: 3px solid blue;
+  height: 100vh;
+}
+
+.todo-list-container__add-button {
+  border: 3px dotted royalblue;
+  background-color: lightcyan;
+  height: 5vh;
+  margin: 0;
+}
+
+.todo-list-container__list {
+  border: 3px dotted royalblue;
+  background-color: lightcyan;
+}
+
+.todo-list-container__input {
+  width: 100%;
+  height: 15vh;
+}
+
+/* todo-entry */
+.todo-entry-wrapper {
+  border: 3px solid lightcoral;
+  width: 100%;
+}
+
+.todo-entry-wrapper__todo {
+  border: 3px solid gray;
+  width: 100%;
+}
+
+.todo-entry-wrapper__check-box {
+  outline: 3px dotted purple;
+}
+
+.todo-entry-wrapper__content {
+  border: 3px dotted purple;
+}
+
+.todo-entry-wrapper__input {
+  border: 3px solid saddlebrown;
+  width: 100%;
+  margin-left: 10%;
 }

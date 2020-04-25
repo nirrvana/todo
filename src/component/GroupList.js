@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addGroup } from '../redux/action';
 import GroupEntry from './GroupEntry';
+import { Container, Row } from 'react-bootstrap';
+
 class GroupList extends Component {
   state = {
     isAddMode: false,
@@ -42,14 +44,15 @@ class GroupList extends Component {
     }
   };
 
-  renderGroupNameInput = (isAddMode, submitGroupName, hideGroupNameInput) => {
+  renderGroupNameInput = (isAddMode) => {
     if (isAddMode) {
       return (
         <input
           autoFocus
           placeholder="group name"
-          onKeyDown={submitGroupName}
-          onClick={hideGroupNameInput}
+          className="group-list-container__input"
+          onKeyDown={this.submitGroupName}
+          onClick={this.hideGroupNameInput}
         />
       );
     }
@@ -59,25 +62,29 @@ class GroupList extends Component {
     const {
       props: { groupList },
       state: { isAddMode },
-      toggleAddMode,
-      submitGroupName,
-      hideGroupNameInput,
     } = this;
 
     return (
-      <div ref={this.groupListContainer}>
-        <div onClick={toggleAddMode}>+ Add Group</div>
-        {this.renderGroupNameInput(
-          isAddMode,
-          submitGroupName,
-          hideGroupNameInput,
-        )}
-        <ul className="group-list__list">
-          {groupList.map((group, index) => (
-            <GroupEntry key={index} index={index} groupName={group.name} />
-          ))}
-        </ul>
-      </div>
+      <Container className="group-list-container" ref={this.groupListContainer}>
+        <Row className="group-list-container__wrapper">
+          <div
+            className="group-list-container__add-button"
+            onClick={this.toggleAddMode}
+          >
+            + Add Group
+          </div>
+        </Row>
+        <Row className="group-list-container__wrapper">
+          {this.renderGroupNameInput(isAddMode)}
+        </Row>
+        <Row className="group-list-container__wrapper">
+          <div className="group-list-container__list">
+            {groupList.map((group, index) => (
+              <GroupEntry key={index} index={index} groupName={group.name} />
+            ))}
+          </div>
+        </Row>
+      </Container>
     );
   }
 }
