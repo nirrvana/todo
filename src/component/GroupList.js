@@ -66,7 +66,7 @@ class GroupList extends Component {
 
     return (
       <Container className="group-list-container" ref={this.groupListContainer}>
-        <Row className="group-list-container__wrapper">
+        <Row noGutters={true} className="group-list-container__wrapper">
           <div
             className="group-list-container__add-button"
             onClick={this.toggleAddMode}
@@ -74,10 +74,10 @@ class GroupList extends Component {
             + Add Group
           </div>
         </Row>
-        <Row className="group-list-container__wrapper">
+        <Row noGutters={true} className="group-list-container__wrapper">
           {this.renderGroupNameInput(isAddMode)}
         </Row>
-        <Row className="group-list-container__wrapper">
+        <Row noGutters={true} className="group-list-container__wrapper">
           <div className="group-list-container__list">
             {groupList.map((group, index) => (
               <GroupEntry key={index} index={index} groupName={group.name} />

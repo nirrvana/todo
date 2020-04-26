@@ -52,7 +52,7 @@ class TodoEntry extends Component {
 
     return (
       <Row noGutters={true} className="todo-entry-wrapper__todo">
-        <Col md={1}>
+        <Col xl={1}>
           <input
             className="todo-entry-wrapper__check-box"
             type="checkbox"
@@ -60,7 +60,7 @@ class TodoEntry extends Component {
             onChange={() => dispatchCompleteTodo(todoIndex)}
           />
         </Col>
-        <Col md={10}>
+        <Col xl={10}>
           <div
             className="todo-entry-wrapper__content"
             onClick={() => this.setState({ isUpdateMode: true })}
@@ -68,7 +68,7 @@ class TodoEntry extends Component {
             {todo.content}
           </div>
         </Col>
-        <Col md={1}>{this.renderDeleteTodoButton()}</Col>
+        <Col xl={1}>{this.renderDeleteTodoButton()}</Col>
       </Row>
     );
   };
@@ -95,7 +95,7 @@ class TodoEntry extends Component {
     const todoContentForEdit = selectedGroupForEdit.todoList[todoIndex].content;
 
     return (
-      <Col md={10}>
+      <Col xl={10}>
         <input
           className="todo-entry-wrapper__input"
           autoFocus

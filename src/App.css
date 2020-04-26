@@ -1,7 +1,12 @@
+.body {
+  min-width: 900px;
+}
+
 /* app */
 .app-container {
   border: 3px solid black;
   padding: 0;
+  min-width: 900px;
 }
 
 .app-container__wrapper {
@@ -12,13 +17,13 @@
 .group-list-container {
   border: 3px solid red;
   height: 100vh;
-  width: 100%;
+  padding: 7%;
+  min-width: 300px;
 }
 
 .group-list-container__wrapper {
   border: 3px solid goldenrod;
   background-color: lemonchiffon;
-  margin: 0;
 }
 
 .group-list-container__add-button {
@@ -53,6 +58,8 @@
 .todo-list-container {
   border: 3px solid blue;
   height: 100vh;
+  padding: 4%;
+  min-width: 500px;
 }
 
 .todo-list-container__add-button {

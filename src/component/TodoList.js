@@ -72,8 +72,12 @@ class TodoList extends Component {
     const todoList = selectedGroup.todoList;
 
     return (
-      <Container className="todo-list-container" ref={this.todoListContainer}>
-        <Row
+      <Container
+        fluid
+        className="todo-list-container"
+        ref={this.todoListContainer}
+      >
+        <Row noGutters={true}
           className="todo-list-container__add-button"
           onClick={() => this.setState({ isAddMode: !isAddMode })}
         >

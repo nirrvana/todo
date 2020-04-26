@@ -114,11 +114,11 @@ class GroupEntry extends Component {
           onMouseEnter={() => this.setState({ isEditMode: true })}
           onMouseLeave={() => this.setState({ isEditMode: false })}
         >
-          <Col md={6}>{this.renderGroupName(isRenameMode)}</Col>
-          <Col md={2}>
+          <Col xl={6}>{this.renderGroupName(isRenameMode)}</Col>
+          <Col xl={2}>
             {this.renderGroupDeleteButton(isEditMode, isRenameMode)}
           </Col>
-          <Col md={4}>
+          <Col xl={4}>
             {this.renderGroupRenameButton(isEditMode, isRenameMode)}
           </Col>
         </Row>

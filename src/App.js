@@ -14,12 +14,12 @@ class App extends Component {
 
   render() {
     return (
-      <Container className="app-container">
-        <Row noGutters={true} className="app-container__wrapper">
-          <Col md={3}>
+      <Container fluid className="app-container">
+        <Row noGutters={true} className="app-container__wrapper flex-nowrap">
+          <Col xl={4}>
             <GroupList />
           </Col>
-          <Col md={9}>{this.renderTodoList()}</Col>
+          <Col xl={8}>{this.renderTodoList()}</Col>
         </Row>
       </Container>
     );
