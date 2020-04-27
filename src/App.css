@@ -1,12 +1,9 @@
-.body {
-  min-width: 900px;
-}
-
 /* app */
 .app-container {
   border: 3px solid black;
   padding: 0;
-  min-width: 900px;
+  min-width: 1500px;
+  max-width: 1500px;
 }
 
 .app-container__wrapper {
@@ -18,7 +15,8 @@
   border: 3px solid red;
   height: 100vh;
   padding: 7%;
-  min-width: 300px;
+  min-width: 500px;
+  max-width: 500px;
 }
 
 .group-list-container__wrapper {
@@ -54,12 +52,27 @@
   width: 100%;
 }
 
+.group-entry-wrapper__name-area {
+  min-width: 250px;
+}
+
+.group-entry-wrapper__delete-button-area {
+  min-width: 40px;
+  max-width: 40px;
+}
+
+.group-entry-wrapper__rename-button-area {
+  min-width: 80px;
+  max-width: 80px;
+}
+
 /* todo-list */
 .todo-list-container {
   border: 3px solid blue;
   height: 100vh;
   padding: 4%;
-  min-width: 500px;
+  min-width: 1000px;
+  max-width: 1000px;
 }
 
 .todo-list-container__add-button {
