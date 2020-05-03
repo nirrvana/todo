@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addGroup } from '../redux/action';
 import GroupEntry from './GroupEntry';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 class GroupList extends Component {
   state = {
@@ -67,22 +67,22 @@ class GroupList extends Component {
     return (
       <Container className="group-list-container" ref={this.groupListContainer}>
         <Row noGutters={true} className="group-list-container__wrapper">
-          <div
+          <button
             className="group-list-container__add-button"
             onClick={this.toggleAddMode}
           >
             + Add Group
-          </div>
+          </button>
         </Row>
         <Row noGutters={true} className="group-list-container__wrapper">
           {this.renderGroupNameInput(isAddMode)}
         </Row>
         <Row noGutters={true} className="group-list-container__wrapper">
-          <div className="group-list-container__list">
+          <Col className="group-list-container__group-entry-area">
             {groupList.map((group, index) => (
               <GroupEntry key={index} index={index} groupName={group.name} />
             ))}
-          </div>
+          </Col>
         </Row>
       </Container>
     );
