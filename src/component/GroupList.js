@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addGroup } from '../redux/action';
 import GroupEntry from './GroupEntry';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form, ListGroup } from 'react-bootstrap';
 
 class GroupList extends Component {
   state = {
@@ -47,7 +47,7 @@ class GroupList extends Component {
   renderGroupNameInput = (isAddMode) => {
     if (isAddMode) {
       return (
-        <input
+        <Form.Control
           autoFocus
           placeholder="group name"
           className="group-list-container__input"
@@ -65,23 +65,35 @@ class GroupList extends Component {
     } = this;
 
     return (
-      <Container className="group-list-container" ref={this.groupListContainer}>
+      <Container
+        fluid
+        className="group-list-container"
+        ref={this.groupListContainer}
+      >
         <Row noGutters={true} className="group-list-container__wrapper">
-          <button
+          <Button
             className="group-list-container__add-button"
             onClick={this.toggleAddMode}
           >
             + Add Group
-          </button>
+          </Button>
         </Row>
         <Row noGutters={true} className="group-list-container__wrapper">
           {this.renderGroupNameInput(isAddMode)}
         </Row>
         <Row noGutters={true} className="group-list-container__wrapper">
           <Col className="group-list-container__group-entry-area">
-            {groupList.map((group, index) => (
-              <GroupEntry key={index} index={index} groupName={group.name} />
-            ))}
+            <ListGroup>
+              {groupList.map((group, index) => (
+                <ListGroup.Item>
+                  <GroupEntry
+                    key={index}
+                    index={index}
+                    groupName={group.name}
+                  />
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
           </Col>
         </Row>
       </Container>

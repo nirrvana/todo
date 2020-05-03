@@ -1,37 +1,28 @@
 /* app */
 .app-container {
-  border: 3px solid black;
+  border: 3px solid #adb2b7;
   padding: 0;
   min-width: 1500px;
   max-width: 1500px;
 }
 
-.app-container__wrapper {
-  border: 5px solid yellowgreen;
-}
-
 /* group-list */
 .group-list-container {
-  border: 3px solid red;
+  border-right: 3px solid #adb2b7;
+  background-color: #adb2b7;
   height: 100vh;
-  padding: 7%;
+  padding: 40px;
   min-width: 500px;
   max-width: 500px;
 }
 
-.group-list-container__wrapper {
-  border: 3px solid goldenrod;
-  background-color: lemonchiffon;
-}
-
 .group-list-container__add-button {
-  border: 3px dotted darkorchid;
   width: 100%;
+  margin-bottom: 8px;
 }
 
 .group-list-container__input {
-  border: 3px dotted orchid;
-  width: 100%;
+  margin-bottom: 8px;
 }
 
 /* group-entry */
@@ -39,13 +30,9 @@
   padding: 0;
 }
 
-.group-entry-element__input {
-  border: 3px solid saddlebrown;
-  width: 100%;
-}
-
 .group-entry-container__name-area {
   min-width: 250px;
+  height: 35px;
 }
 
 .group-entry-container__delete-button-area {
@@ -58,15 +45,22 @@
   max-width: 80px;
 }
 
-.group-entry-container__name,
-.group-entry-container__delete-button,
-.group-entry-container__rename-button {
-  border: 3px solid teal;
+.group-entry-container__name {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.group-entry-element__input {
+  border: none;
+  width: 100%;
+  height: 35px;
+  padding: 0;
 }
 
 /* todo-list */
 .todo-list-container {
-  border: 3px solid blue;
+  /* border: 3px solid blue; */
   height: 100vh;
   padding: 4% 10% 4% 10%;
   min-width: 1000px;
