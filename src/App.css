@@ -70,16 +70,21 @@
 .todo-list-container {
   border: 3px solid blue;
   height: 100vh;
-  padding: 4%;
+  padding: 4% 10% 4% 10%;
   min-width: 1000px;
   max-width: 1000px;
 }
 
 .todo-list-container__add-button {
   border: 3px dotted royalblue;
+  border-radius: 100%;
   background-color: lightcyan;
-  height: 5vh;
+  width: 50px;
+  height: 50px;
   margin: 0;
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
 }
 
 .todo-list-container__list {
@@ -93,26 +98,40 @@
 }
 
 /* todo-entry */
-.todo-entry-wrapper {
+.todo-entry-container {
   border: 3px solid lightcoral;
   width: 100%;
+  padding:0;
 }
 
-.todo-entry-wrapper__todo {
+.todo-entry-container__wrapper {
   border: 3px solid gray;
   width: 100%;
 }
 
-.todo-entry-wrapper__check-box {
+.todo-entry-container__check-box-area {
+  max-width: 50px;
+}
+
+.todo-entry-container__content-area {
+  max-width: 500px;
+}
+
+.todo-entry-container__delete-button-area {
+  max-width: 50px;
+}
+
+.todo-entry-container__check-box {
   outline: 3px dotted purple;
 }
 
-.todo-entry-wrapper__content {
+.todo-entry-container__content {
   border: 3px dotted purple;
 }
 
-.todo-entry-wrapper__input {
+.todo-entry-container__input {
   border: 3px solid saddlebrown;
   width: 100%;
-  margin-left: 10%;
+  margin-left: 7%;
+  max-width: 500px;
 }

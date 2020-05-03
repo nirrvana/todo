@@ -6,7 +6,7 @@ import {
   submitTodo,
   completeTodo,
 } from '../redux/action';
-import { Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 class TodoEntry extends Component {
   state = {
@@ -51,24 +51,29 @@ class TodoEntry extends Component {
     const completionState = selectedGroup.todoList[todoIndex].completed;
 
     return (
-      <Row noGutters={true} className="todo-entry-wrapper__todo">
-        <Col xl={1}>
+      <Row
+        noGutters={true}
+        className="todo-entry-container__wrapper flex-nowrap"
+      >
+        <Col className="todo-entry-container__check-box-area">
           <input
-            className="todo-entry-wrapper__check-box"
+            className="todo-entry-container__check-box"
             type="checkbox"
             checked={completionState}
             onChange={() => dispatchCompleteTodo(todoIndex)}
           />
         </Col>
-        <Col xl={10}>
+        <Col className="todo-entry-container__content-area">
           <div
-            className="todo-entry-wrapper__content"
+            className="todo-entry-container__content"
             onClick={() => this.setState({ isUpdateMode: true })}
           >
             {todo.content}
           </div>
         </Col>
-        <Col xl={1}>{this.renderDeleteTodoButton()}</Col>
+        <Col className="todo-entry-container__delete-button-area">
+          {this.renderDeleteTodoButton()}
+        </Col>
       </Row>
     );
   };
@@ -78,7 +83,7 @@ class TodoEntry extends Component {
     if (isEditMode && !isUpdateMode) {
       return (
         <button
-          className="todo-entry__delete-todo-button"
+          className="todo-entry-container__delete-button"
           onClick={this.deleteTodo}
         >
           X
@@ -95,15 +100,15 @@ class TodoEntry extends Component {
     const todoContentForEdit = selectedGroupForEdit.todoList[todoIndex].content;
 
     return (
-      <Col xl={10}>
+      <Row noGutters={true} className="todo-entry-container__input-area">
         <input
-          className="todo-entry-wrapper__input"
+          className="todo-entry-container__input"
           autoFocus
           value={todoContentForEdit}
           onChange={this.updateTodoContent}
           onKeyDown={this.submitTodoContent}
         />
-      </Col>
+      </Row>
     );
   };
 
@@ -120,14 +125,13 @@ class TodoEntry extends Component {
 
   render() {
     return (
-      <Row
-        noGutters={true}
-        className="todo-entry-wrapper"
+      <Container
+        className="todo-entry-container"
         onMouseEnter={() => this.setState({ isEditMode: true })}
         onMouseLeave={() => this.setState({ isEditMode: false })}
       >
         {this.renderTodoOrInput()}
-      </Row>
+      </Container>
     );
   }
 }

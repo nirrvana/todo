@@ -77,11 +77,13 @@ class TodoList extends Component {
         className="todo-list-container"
         ref={this.todoListContainer}
       >
-        <Row noGutters={true}
-          className="todo-list-container__add-button"
-          onClick={() => this.setState({ isAddMode: !isAddMode })}
-        >
-          +
+        <Row noGutters={true}>
+          <button
+            className="todo-list-container__add-button"
+            onClick={() => this.setState({ isAddMode: !isAddMode })}
+          >
+            +
+          </button>
         </Row>
         <Row noGutters={true} className="todo-list-container__list">
           {this.renderListOrInput(isAddMode, todoList)}
