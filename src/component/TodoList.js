@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addTodo } from '../redux/action';
 import TodoEntry from './TodoEntry';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 class TodoList extends Component {
   state = {
@@ -43,13 +43,15 @@ class TodoList extends Component {
 
   renderTodoInput = () => {
     return (
-      <input
-        autoFocus
-        className="todo-list-container__input"
-        placeholder="todo"
-        onKeyDown={this.submitTodo}
-        onClick={this.hideTodoInput}
-      />
+      <Col>
+        <input
+          autoFocus
+          className="todo-list-container__input"
+          placeholder="todo"
+          onKeyDown={this.submitTodo}
+          onClick={this.hideTodoInput}
+        />
+      </Col>
     );
   };
 
@@ -57,9 +59,13 @@ class TodoList extends Component {
     if (isAddMode) {
       return this.renderTodoInput();
     } else {
-      return todoList.map((todo, index) => (
-        <TodoEntry key={index} index={index} todo={todo} />
-      ));
+      return (
+        <Col>
+          {todoList.map((todo, index) => (
+            <TodoEntry key={index} index={index} todo={todo} />
+          ))}
+        </Col>
+      );
     }
   };
 
@@ -72,12 +78,18 @@ class TodoList extends Component {
     const todoList = selectedGroup.todoList;
 
     return (
-      <Container className="todo-list-container" ref={this.todoListContainer}>
-        <Row
-          className="todo-list-container__add-button"
-          onClick={() => this.setState({ isAddMode: !isAddMode })}
-        >
-          +
+      <Container
+        fluid
+        className="todo-list-container"
+        ref={this.todoListContainer}
+      >
+        <Row noGutters={true}>
+          <button
+            className="todo-list-container__add-button"
+            onClick={() => this.setState({ isAddMode: !isAddMode })}
+          >
+            +
+          </button>
         </Row>
         <Row noGutters={true} className="todo-list-container__list">
           {this.renderListOrInput(isAddMode, todoList)}

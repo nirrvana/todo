@@ -2,6 +2,8 @@
 .app-container {
   border: 3px solid black;
   padding: 0;
+  min-width: 1500px;
+  max-width: 1500px;
 }
 
 .app-container__wrapper {
@@ -12,13 +14,14 @@
 .group-list-container {
   border: 3px solid red;
   height: 100vh;
-  width: 100%;
+  padding: 7%;
+  min-width: 500px;
+  max-width: 500px;
 }
 
 .group-list-container__wrapper {
   border: 3px solid goldenrod;
   background-color: lemonchiffon;
-  margin: 0;
 }
 
 .group-list-container__add-button {
@@ -31,35 +34,55 @@
   width: 100%;
 }
 
-.group-list-container__list {
-  border: 3px dotted lightseagreen;
-  margin-bottom: 0;
-  width: 100%;
-}
-
 /* group-entry */
-.group-entry-wrapper__name,
-.group-entry-wrapper__delete-button,
-.group-entry-wrapper__rename-button {
-  border: 3px solid teal;
+.group-entry-container {
+  padding: 0;
 }
 
-.group-entry-wrapper__input {
+.group-entry-element__input {
   border: 3px solid saddlebrown;
   width: 100%;
+}
+
+.group-entry-container__name-area {
+  min-width: 250px;
+}
+
+.group-entry-container__delete-button-area {
+  min-width: 40px;
+  max-width: 40px;
+}
+
+.group-entry-container__rename-button-area {
+  min-width: 80px;
+  max-width: 80px;
+}
+
+.group-entry-container__name,
+.group-entry-container__delete-button,
+.group-entry-container__rename-button {
+  border: 3px solid teal;
 }
 
 /* todo-list */
 .todo-list-container {
   border: 3px solid blue;
   height: 100vh;
+  padding: 4% 10% 4% 10%;
+  min-width: 1000px;
+  max-width: 1000px;
 }
 
 .todo-list-container__add-button {
   border: 3px dotted royalblue;
+  border-radius: 100%;
   background-color: lightcyan;
-  height: 5vh;
+  width: 50px;
+  height: 50px;
   margin: 0;
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
 }
 
 .todo-list-container__list {
@@ -73,26 +96,53 @@
 }
 
 /* todo-entry */
-.todo-entry-wrapper {
+.todo-entry-container {
   border: 3px solid lightcoral;
   width: 100%;
+  padding: 0;
 }
 
-.todo-entry-wrapper__todo {
+.todo-entry-container__wrapper {
   border: 3px solid gray;
   width: 100%;
 }
 
-.todo-entry-wrapper__check-box {
+.todo-entry-container__check-box-area,
+.todo-entry-container__content-area,
+.todo-entry-container__delete-button-area {
+  position: relative;
+}
+
+.todo-entry-container__check-box-area {
+  max-width: 50px;
+}
+
+.todo-entry-container__content-area {
+  max-width: 500px;
+  height: 50px;
+}
+
+.todo-entry-container__delete-button-area {
+  max-width: 50px;
+}
+
+.todo-entry-container__check-box,
+.todo-entry-container__content,
+.todo-entry-container__delete-button {
   outline: 3px dotted purple;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.todo-entry-wrapper__content {
-  border: 3px dotted purple;
+.todo-entry-container__content {
+  width: 100%;
 }
 
-.todo-entry-wrapper__input {
+.todo-entry-container__input {
   border: 3px solid saddlebrown;
   width: 100%;
-  margin-left: 10%;
+  margin-left: 6.5%;
+  max-width: 500px;
+  height: 50px;
 }

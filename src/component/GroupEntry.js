@@ -6,7 +6,7 @@ import {
   updateGroup,
   renameGroup,
 } from '../redux/action';
-import { Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 class GroupEntry extends Component {
   state = {
@@ -43,7 +43,7 @@ class GroupEntry extends Component {
       return (
         <div
           ref={this.groupNameArea}
-          className="group-entry-wrapper__name"
+          className="group-entry-container__name"
           onClick={() => dispatchSelectGroup(index)}
         >
           {groupName}
@@ -58,7 +58,7 @@ class GroupEntry extends Component {
     if (isEditMode && !isRenameMode) {
       return (
         <button
-          className="group-entry-wrapper__delete-button"
+          className="group-entry-container__delete-button"
           onClick={() => dispatchDeleteGroup(index)}
         >
           X
@@ -71,7 +71,7 @@ class GroupEntry extends Component {
     if (isEditMode && !isRenameMode) {
       return (
         <button
-          className="group-entry-wrapper__rename-button"
+          className="group-entry-container__rename-button"
           onClick={() => this.setState({ isRenameMode: true })}
         >
           rename
@@ -88,7 +88,7 @@ class GroupEntry extends Component {
 
     return (
       <input
-        className="group-entry-wrapper__input"
+        className="group-entry-element__input"
         autoFocus
         value={groupNameForEdit}
         onChange={this.updateGroupName}
@@ -101,27 +101,26 @@ class GroupEntry extends Component {
     const { isEditMode, isRenameMode } = this.state;
 
     if (isRenameMode) {
-      return (
-        <Row noGutters={true} className="group-entry-wrapper">
-          {this.renderGroupNameInput()}
-        </Row>
-      );
+      return this.renderGroupNameInput();
     } else {
       return (
-        <Row
-          noGutters={true}
-          className="group-entry-wrapper"
+        <Container
+          className="group-entry-container"
           onMouseEnter={() => this.setState({ isEditMode: true })}
           onMouseLeave={() => this.setState({ isEditMode: false })}
         >
-          <Col md={6}>{this.renderGroupName(isRenameMode)}</Col>
-          <Col md={2}>
-            {this.renderGroupDeleteButton(isEditMode, isRenameMode)}
-          </Col>
-          <Col md={4}>
-            {this.renderGroupRenameButton(isEditMode, isRenameMode)}
-          </Col>
-        </Row>
+          <Row noGutters={true} className="group-entry-container__wrapper">
+            <Col className="group-entry-container__name-area">
+              {this.renderGroupName(isRenameMode)}
+            </Col>
+            <Col className="group-entry-container__delete-button-area">
+              {this.renderGroupDeleteButton(isEditMode, isRenameMode)}
+            </Col>
+            <Col className="group-entry-container__rename-button-area">
+              {this.renderGroupRenameButton(isEditMode, isRenameMode)}
+            </Col>
+          </Row>
+        </Container>
       );
     }
   }
