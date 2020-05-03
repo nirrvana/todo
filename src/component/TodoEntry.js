@@ -100,14 +100,16 @@ class TodoEntry extends Component {
     const todoContentForEdit = selectedGroupForEdit.todoList[todoIndex].content;
 
     return (
-      <Row noGutters={true} className="todo-entry-container__input-area">
-        <input
-          className="todo-entry-container__input"
-          autoFocus
-          value={todoContentForEdit}
-          onChange={this.updateTodoContent}
-          onKeyDown={this.submitTodoContent}
-        />
+      <Row noGutters={true} className="todo-entry-container__wrapper">
+        <Col>
+          <input
+            autoFocus
+            className="todo-entry-container__input"
+            value={todoContentForEdit}
+            onChange={this.updateTodoContent}
+            onKeyDown={this.submitTodoContent}
+          />
+        </Col>
       </Row>
     );
   };
