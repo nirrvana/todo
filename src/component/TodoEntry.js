@@ -6,7 +6,7 @@ import {
   submitTodo,
   completeTodo,
 } from '../redux/action';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
 class TodoEntry extends Component {
   state = {
@@ -38,17 +38,7 @@ class TodoEntry extends Component {
   };
 
   renderTodo = () => {
-    const {
-      index: todoIndex,
-      todo,
-      groupList,
-      selectedIndex,
-      dispatchCompleteTodo,
-    } = this.props;
-    const selectedGroup = groupList.filter(
-      (_group, index) => index === selectedIndex,
-    )[0];
-    const completionState = selectedGroup.todoList[todoIndex].completed;
+    const { index: todoIndex, todo, dispatchCompleteTodo } = this.props;
 
     return (
       <Row
@@ -59,7 +49,7 @@ class TodoEntry extends Component {
           <input
             className="todo-entry-container__check-box"
             type="checkbox"
-            checked={completionState}
+            checked={todo.completed}
             onChange={() => dispatchCompleteTodo(todoIndex)}
           />
         </Col>
@@ -82,12 +72,13 @@ class TodoEntry extends Component {
     const { isEditMode, isUpdateMode } = this.state;
     if (isEditMode && !isUpdateMode) {
       return (
-        <button
+        <Button
+          size="sm"
           className="todo-entry-container__delete-button"
           onClick={this.deleteTodo}
         >
           X
-        </button>
+        </Button>
       );
     }
   };
@@ -128,6 +119,7 @@ class TodoEntry extends Component {
   render() {
     return (
       <Container
+        fluid
         className="todo-entry-container"
         onMouseEnter={() => this.setState({ isEditMode: true })}
         onMouseLeave={() => this.setState({ isEditMode: false })}

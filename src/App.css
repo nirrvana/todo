@@ -60,7 +60,6 @@
 
 /* todo-list */
 .todo-list-container {
-  /* border: 3px solid blue; */
   height: 100vh;
   padding: 4% 10% 4% 10%;
   min-width: 1000px;
@@ -68,20 +67,13 @@
 }
 
 .todo-list-container__add-button {
-  border: 3px dotted royalblue;
   border-radius: 100%;
-  background-color: lightcyan;
   width: 50px;
   height: 50px;
   margin: 0;
   position: absolute;
   bottom: 5%;
   right: 5%;
-}
-
-.todo-list-container__list {
-  border: 3px dotted royalblue;
-  background-color: lightcyan;
 }
 
 .todo-list-container__input {
@@ -91,13 +83,11 @@
 
 /* todo-entry */
 .todo-entry-container {
-  border: 3px solid lightcoral;
   width: 100%;
   padding: 0;
 }
 
 .todo-entry-container__wrapper {
-  border: 3px solid gray;
   width: 100%;
 }
 
@@ -123,7 +113,6 @@
 .todo-entry-container__check-box,
 .todo-entry-container__content,
 .todo-entry-container__delete-button {
-  outline: 3px dotted purple;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -134,9 +123,10 @@
 }
 
 .todo-entry-container__input {
-  border: 3px solid saddlebrown;
+  border: none;
   width: 100%;
-  margin-left: 6.5%;
+  margin-left: 50px;
   max-width: 500px;
   height: 50px;
+  padding: 0;
 }
