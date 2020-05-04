@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addTodo } from '../redux/action';
 import TodoEntry from './TodoEntry';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button, ListGroup, Form } from 'react-bootstrap';
 
 class TodoList extends Component {
   state = {
@@ -44,7 +44,7 @@ class TodoList extends Component {
   renderTodoInput = () => {
     return (
       <Col>
-        <input
+        <Form.Control
           autoFocus
           className="todo-list-container__input"
           placeholder="todo"
@@ -61,9 +61,15 @@ class TodoList extends Component {
     } else {
       return (
         <Col>
-          {todoList.map((todo, index) => (
-            <TodoEntry key={index} index={index} todo={todo} />
-          ))}
+          <ListGroup>
+            {todoList.map((todo, index) =>
+              todo.completed ? null : (
+                <ListGroup.Item>
+                  <TodoEntry key={index} index={index} todo={todo} />
+                </ListGroup.Item>
+              ),
+            )}
+          </ListGroup>
         </Col>
       );
     }
@@ -84,12 +90,12 @@ class TodoList extends Component {
         ref={this.todoListContainer}
       >
         <Row noGutters={true}>
-          <button
+          <Button
             className="todo-list-container__add-button"
             onClick={() => this.setState({ isAddMode: !isAddMode })}
           >
             +
-          </button>
+          </Button>
         </Row>
         <Row noGutters={true} className="todo-list-container__list">
           {this.renderListOrInput(isAddMode, todoList)}

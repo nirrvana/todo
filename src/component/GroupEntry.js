@@ -6,7 +6,7 @@ import {
   updateGroup,
   renameGroup,
 } from '../redux/action';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
 class GroupEntry extends Component {
   state = {
@@ -57,12 +57,13 @@ class GroupEntry extends Component {
 
     if (isEditMode && !isRenameMode) {
       return (
-        <button
+        <Button
+          size="sm"
           className="group-entry-container__delete-button"
           onClick={() => dispatchDeleteGroup(index)}
         >
           X
-        </button>
+        </Button>
       );
     }
   };
@@ -70,12 +71,13 @@ class GroupEntry extends Component {
   renderGroupRenameButton = (isEditMode, isRenameMode) => {
     if (isEditMode && !isRenameMode) {
       return (
-        <button
+        <Button
+          size="sm"
           className="group-entry-container__rename-button"
           onClick={() => this.setState({ isRenameMode: true })}
         >
           rename
-        </button>
+        </Button>
       );
     }
   };
@@ -105,6 +107,7 @@ class GroupEntry extends Component {
     } else {
       return (
         <Container
+          fluid
           className="group-entry-container"
           onMouseEnter={() => this.setState({ isEditMode: true })}
           onMouseLeave={() => this.setState({ isEditMode: false })}
