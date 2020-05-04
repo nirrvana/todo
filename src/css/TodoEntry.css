@@ -1,0 +1,48 @@
+.todo-entry-container {
+  width: 100%;
+  padding: 0;
+}
+
+.todo-entry-container__wrapper {
+  width: 100%;
+}
+
+.todo-entry-container__check-box-area,
+.todo-entry-container__content-area,
+.todo-entry-container__delete-button-area {
+  position: relative;
+}
+
+.todo-entry-container__check-box-area {
+  max-width: 50px;
+}
+
+.todo-entry-container__content-area {
+  max-width: 500px;
+  height: 50px;
+}
+
+.todo-entry-container__delete-button-area {
+  max-width: 50px;
+}
+
+.todo-entry-container__check-box,
+.todo-entry-container__content,
+.todo-entry-container__delete-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.todo-entry-container__content {
+  width: 100%;
+}
+
+.todo-entry-container__input {
+  border: none;
+  width: 100%;
+  margin-left: 50px;
+  max-width: 500px;
+  height: 50px;
+  padding: 0;
+}

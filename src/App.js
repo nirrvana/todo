@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import GroupList from './component/GroupList';
 import TodoList from './component/TodoList';
 import { Container, Row, Col } from 'react-bootstrap';
-import './App.css';
+import './css/App.css';
 
 class App extends Component {
   renderTodoList = () => {

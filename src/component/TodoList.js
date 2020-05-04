@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { addTodo } from '../redux/action';
 import TodoEntry from './TodoEntry';
 import { Container, Row, Col, Button, ListGroup, Form } from 'react-bootstrap';
+import '../css/TodoList.css';
 
 class TodoList extends Component {
   state = {

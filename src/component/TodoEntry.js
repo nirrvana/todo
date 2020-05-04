@@ -7,6 +7,7 @@ import {
   completeTodo,
 } from '../redux/action';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import '../css/TodoEntry.css';
 
 class TodoEntry extends Component {
   state = {

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { addGroup } from '../redux/action';
 import GroupEntry from './GroupEntry';
 import { Container, Row, Col, Button, Form, ListGroup } from 'react-bootstrap';
+import '../css/GroupList.css';
 
 class GroupList extends Component {
   state = {

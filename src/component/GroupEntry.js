@@ -7,6 +7,7 @@ import {
   renameGroup,
 } from '../redux/action';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import '../css/GroupEntry.css';
 
 class GroupEntry extends Component {
   state = {

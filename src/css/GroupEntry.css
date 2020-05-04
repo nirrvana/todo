@@ -1,0 +1,31 @@
+.group-entry-container {
+  padding: 0;
+}
+
+.group-entry-container__name-area {
+  min-width: 250px;
+  height: 35px;
+}
+
+.group-entry-container__delete-button-area {
+  min-width: 40px;
+  max-width: 40px;
+}
+
+.group-entry-container__rename-button-area {
+  min-width: 80px;
+  max-width: 80px;
+}
+
+.group-entry-container__name {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.group-entry-element__input {
+  border: none;
+  width: 100%;
+  height: 35px;
+  padding: 0;
+}
