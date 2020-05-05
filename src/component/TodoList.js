@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addTodo } from '../redux/action';
+import Action from '../redux/action';
 import TodoEntry from './TodoEntry';
 import { Container, Row, Col, Button, ListGroup, Form } from 'react-bootstrap';
 import '../css/TodoList.css';
@@ -112,7 +112,7 @@ const mapStateToProps = ({ groupList, selectedIndex }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchAddTodo: (content) => dispatch(addTodo(content)),
+  dispatchAddTodo: (content) => dispatch(Action.addTodo(content)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

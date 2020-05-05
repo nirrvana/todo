@@ -12,7 +12,7 @@ import {
   COMPLETE_TODO,
 } from './action';
 
-import { getGroupList } from './api';
+import Api from './api';
 
 const initialState = {
   groupList: [],
@@ -26,7 +26,7 @@ const reducer = (state = initialState, action) => {
 
   switch (action.type) {
     case GET_GROUP_LIST:
-      groupListData = JSON.parse(getGroupList());
+      groupListData = JSON.parse(Api.getGroupList());
       return {
         ...state,
         groupList: [...groupListData],
@@ -38,12 +38,10 @@ const reducer = (state = initialState, action) => {
         selectedIndex: action.index,
       };
     case ADD_GROUP:
+      groupListData = JSON.parse(Api.addGroup(action.name));
       return {
-        groupList: [...groupList, { name: action.name, todoList: [] }],
-        groupListForEdit: [
-          ...groupListForEdit,
-          { name: action.name, todoList: [] },
-        ],
+        groupList: [...groupListData],
+        groupListForEdit: [...groupListData],
         selectedIndex: groupList.length,
       };
     case DELETE_GROUP:

@@ -10,56 +10,58 @@ export const UPDATE_TODO = 'UPDATE_TODO';
 export const SUBMIT_TODO = 'SUBMIT_TODO';
 export const COMPLETE_TODO = 'COMPLETE_TODO';
 
-export const getGroupList = () => ({
-  type: GET_GROUP_LIST,
-});
+export default class Action {
+  static getGroupList = () => ({
+    type: GET_GROUP_LIST,
+  });
 
-export const selectGroup = (index) => ({
-  type: SELECT_GROUP,
-  index,
-});
+  static selectGroup = (index) => ({
+    type: SELECT_GROUP,
+    index,
+  });
 
-export const addGroup = (name) => ({
-  type: ADD_GROUP,
-  name,
-});
+  static addGroup = (name) => ({
+    type: ADD_GROUP,
+    name,
+  });
 
-export const deleteGroup = (index) => ({
-  type: DELETE_GROUP,
-  index,
-});
+  static deleteGroup = (index) => ({
+    type: DELETE_GROUP,
+    index,
+  });
 
-export const updateGroup = (index, name) => ({
-  type: UPDATE_GROUP,
-  index,
-  name,
-});
+  static updateGroup = (index, name) => ({
+    type: UPDATE_GROUP,
+    index,
+    name,
+  });
 
-export const renameGroup = () => ({
-  type: RENAME_GROUP,
-});
+  static renameGroup = () => ({
+    type: RENAME_GROUP,
+  });
 
-export const addTodo = (content) => ({
-  type: ADD_TODO,
-  content,
-});
+  static addTodo = (content) => ({
+    type: ADD_TODO,
+    content,
+  });
 
-export const deleteTodo = (index) => ({
-  type: DELETE_TODO,
-  index,
-});
+  static deleteTodo = (index) => ({
+    type: DELETE_TODO,
+    index,
+  });
 
-export const updateTodo = (index, content) => ({
-  type: UPDATE_TODO,
-  index,
-  content,
-});
+  static updateTodo = (index, content) => ({
+    type: UPDATE_TODO,
+    index,
+    content,
+  });
 
-export const submitTodo = () => ({
-  type: SUBMIT_TODO,
-});
+  static submitTodo = () => ({
+    type: SUBMIT_TODO,
+  });
 
-export const completeTodo = (index) => ({
-  type: COMPLETE_TODO,
-  index,
-});
+  static completeTodo = (index) => ({
+    type: COMPLETE_TODO,
+    index,
+  });
+}

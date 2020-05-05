@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  selectGroup,
-  deleteGroup,
-  updateGroup,
-  renameGroup,
-} from '../redux/action';
+import Action from '../redux/action';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import '../css/GroupEntry.css';
 
@@ -135,10 +130,11 @@ const mapStateToProps = ({ groupListForEdit }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchSelectGroup: (index) => dispatch(selectGroup(index)),
-  dispatchDeleteGroup: (index) => dispatch(deleteGroup(index)),
-  dispatchUpdateGroup: (index, name) => dispatch(updateGroup(index, name)),
-  dispatchRenameGroup: () => dispatch(renameGroup()),
+  dispatchSelectGroup: (index) => dispatch(Action.selectGroup(index)),
+  dispatchDeleteGroup: (index) => dispatch(Action.deleteGroup(index)),
+  dispatchUpdateGroup: (index, name) =>
+    dispatch(Action.updateGroup(index, name)),
+  dispatchRenameGroup: () => dispatch(Action.renameGroup()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupEntry);

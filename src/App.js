@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getGroupList } from './redux/action';
+import Action from './redux/action';
 import GroupList from './component/GroupList';
 import TodoList from './component/TodoList';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -34,7 +34,7 @@ class App extends Component {
 const mapStateToProps = ({ selectedIndex }) => ({ selectedIndex });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchGetGroupList: () => dispatch(getGroupList()),
+  dispatchGetGroupList: () => dispatch(Action.getGroupList()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

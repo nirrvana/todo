@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  deleteTodo,
-  updateTodo,
-  submitTodo,
-  completeTodo,
-} from '../redux/action';
+import Action from '../redux/action';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import '../css/TodoEntry.css';
 
@@ -138,10 +133,11 @@ const mapStateToProps = ({ groupList, groupListForEdit, selectedIndex }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchDeleteTodo: (content) => dispatch(deleteTodo(content)),
-  dispatchUpdateTodo: (index, content) => dispatch(updateTodo(index, content)),
-  dispatchSubmitTodo: () => dispatch(submitTodo()),
-  dispatchCompleteTodo: (index) => dispatch(completeTodo(index)),
+  dispatchDeleteTodo: (content) => dispatch(Action.deleteTodo(content)),
+  dispatchUpdateTodo: (index, content) =>
+    dispatch(Action.updateTodo(index, content)),
+  dispatchSubmitTodo: () => dispatch(Action.submitTodo()),
+  dispatchCompleteTodo: (index) => dispatch(Action.completeTodo(index)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoEntry);
