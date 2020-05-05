@@ -1,3 +1,4 @@
+export const GET_GROUP_LIST = 'GET_GROUP_LIST';
 export const SELECT_GROUP = 'SELECT_GROUP';
 export const ADD_GROUP = 'ADD_GROUP';
 export const DELETE_GROUP = 'DELETE_GROUP';
@@ -8,6 +9,10 @@ export const DELETE_TODO = 'DELETE_TODO';
 export const UPDATE_TODO = 'UPDATE_TODO';
 export const SUBMIT_TODO = 'SUBMIT_TODO';
 export const COMPLETE_TODO = 'COMPLETE_TODO';
+
+export const getGroupList = () => ({
+  type: GET_GROUP_LIST,
+});
 
 export const selectGroup = (index) => ({
   type: SELECT_GROUP,

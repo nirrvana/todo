@@ -1,4 +1,5 @@
 import {
+  GET_GROUP_LIST,
   SELECT_GROUP,
   ADD_GROUP,
   DELETE_GROUP,
@@ -11,31 +12,26 @@ import {
   COMPLETE_TODO,
 } from './action';
 
+import { getGroupList } from './api';
+
 const initialState = {
-  groupList: [
-    {
-      name: 'coding',
-      todoList: [
-        { content: 'todo app', completed: false },
-        { content: 'next.js', completed: false },
-      ],
-    },
-  ],
-  groupListForEdit: [
-    {
-      name: 'coding',
-      todoList: [
-        { content: 'todo app', completed: false },
-        { content: 'next.js', completed: false },
-      ],
-    },
-  ],
+  groupList: [],
+  groupListForEdit: [],
   selectedIndex: null,
 };
 
 const reducer = (state = initialState, action) => {
   let { groupList, groupListForEdit, selectedIndex } = state;
+  let groupListData = [];
+
   switch (action.type) {
+    case GET_GROUP_LIST:
+      groupListData = JSON.parse(getGroupList());
+      return {
+        ...state,
+        groupList: [...groupListData],
+        groupListForEdit: [...groupListData],
+      };
     case SELECT_GROUP:
       return {
         ...state,
