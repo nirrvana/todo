@@ -45,11 +45,10 @@ const reducer = (state = initialState, action) => {
         selectedIndex: groupList.length,
       };
     case DELETE_GROUP:
+      groupListData = JSON.parse(Api.deleteGroup(action.index));
       return {
-        groupList: groupList.filter((_group, index) => index !== action.index),
-        groupListForEdit: groupListForEdit.filter(
-          (_group, index) => index !== action.index,
-        ),
+        groupList: [...groupListData],
+        groupListForEdit: [...groupListData],
         selectedIndex: null,
       };
     case UPDATE_GROUP:

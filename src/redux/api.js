@@ -9,4 +9,14 @@ export default class Api {
     localStorage.setItem('groupList', JSON.stringify(newGroupList));
     return localStorage.getItem('groupList');
   };
+
+  static deleteGroup = (index) => {
+    const groupList = JSON.parse(localStorage.getItem('groupList'));
+    const filteredGroupList = groupList.filter(
+      (_group, _index) => _index !== index,
+    );
+
+    localStorage.setItem('groupList', JSON.stringify(filteredGroupList));
+    return localStorage.getItem('groupList');
+  };
 }
