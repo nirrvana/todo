@@ -22,7 +22,7 @@ class TodoEntry extends Component {
       if (this.isEmptyTodo(content)) {
         window.alert('Please input todo content');
       } else {
-        this.props.dispatchSubmitTodo();
+        this.props.dispatchSubmitTodo(this.props.index, content);
         this.setState({ isUpdateMode: false });
       }
     }
@@ -135,7 +135,8 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchDeleteTodo: (index) => dispatch(Action.deleteTodo(index)),
   dispatchUpdateTodo: (index, content) =>
     dispatch(Action.updateTodo(index, content)),
-  dispatchSubmitTodo: () => dispatch(Action.submitTodo()),
+  dispatchSubmitTodo: (index, content) =>
+    dispatch(Action.submitTodo(index, content)),
   dispatchCompleteTodo: (index) => dispatch(Action.completeTodo(index)),
 });
 

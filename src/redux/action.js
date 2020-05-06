@@ -58,8 +58,10 @@ export default class Action {
     content,
   });
 
-  static submitTodo = () => ({
+  static submitTodo = (index, content) => ({
     type: SUBMIT_TODO,
+    index,
+    content,
   });
 
   static completeTodo = (index) => ({

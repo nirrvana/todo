@@ -96,9 +96,13 @@ const reducer = (state = initialState, action) => {
         ),
       };
     case SUBMIT_TODO:
+      groupListData = JSON.parse(
+        Api.submitTodo(selectedIndex, action.index, action.content),
+      );
       return {
         ...state,
-        groupList: groupListForEdit,
+        groupList: [...groupListData],
+        groupListForEdit: [...groupListData],
       };
     case COMPLETE_TODO:
       return {
