@@ -105,28 +105,11 @@ const reducer = (state = initialState, action) => {
         groupListForEdit: [...groupListData],
       };
     case COMPLETE_TODO:
+      groupListData = JSON.parse(Api.completeTodo(selectedIndex, action.index));
       return {
         ...state,
-        groupList: groupList.map((group, index) =>
-          index === selectedIndex
-            ? {
-                ...group,
-                todoList: group.todoList.map((todo, index) =>
-                  index === action.index ? { ...todo, completed: true } : todo,
-                ),
-              }
-            : group,
-        ),
-        groupListForEdit: groupListForEdit.map((group, index) =>
-          index === selectedIndex
-            ? {
-                ...group,
-                todoList: group.todoList.map((todo, index) =>
-                  index === action.index ? { ...todo, completed: true } : todo,
-                ),
-              }
-            : group,
-        ),
+        groupList: [...groupListData],
+        groupListForEdit: [...groupListData],
       };
     default:
       return state;

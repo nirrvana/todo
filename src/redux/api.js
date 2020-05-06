@@ -80,4 +80,21 @@ export default class Api {
     localStorage.setItem('groupList', JSON.stringify(newGroupList));
     return localStorage.getItem('groupList');
   };
+
+  static completeTodo = (selectedIndex, todoIndex) => {
+    const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
+    const newGroupList = oldGroupList.map((group, index) =>
+      index === selectedIndex
+        ? {
+            ...group,
+            todoList: group.todoList.map((todo, index) =>
+              index === todoIndex ? { ...todo, completed: true } : todo,
+            ),
+          }
+        : group,
+    );
+
+    localStorage.setItem('groupList', JSON.stringify(newGroupList));
+    return localStorage.getItem('groupList');
+  };
 }
