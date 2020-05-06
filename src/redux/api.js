@@ -29,4 +29,21 @@ export default class Api {
     localStorage.setItem('groupList', JSON.stringify(newGroupList));
     return localStorage.getItem('groupList');
   };
+
+  static addTodo = (selectedIndex, content) => {
+    const newTodo = { content, completed: false };
+    const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
+    const newGroupList = oldGroupList.map((_group, _index) => {
+      return {
+        ..._group,
+        todoList:
+          selectedIndex === _index
+            ? [..._group.todoList, newTodo]
+            : _group.todoList,
+      };
+    });
+
+    localStorage.setItem('groupList', JSON.stringify(newGroupList));
+    return localStorage.getItem('groupList');
+  };
 }
