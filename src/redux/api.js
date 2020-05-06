@@ -3,20 +3,30 @@ export default class Api {
 
   static addGroup = (name) => {
     const newGroup = { name, todoList: [] };
-    const groupList = JSON.parse(localStorage.getItem('groupList'));
-    const newGroupList = [...groupList, newGroup];
+    const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
+    const newGroupList = [...oldGroupList, newGroup];
 
     localStorage.setItem('groupList', JSON.stringify(newGroupList));
     return localStorage.getItem('groupList');
   };
 
   static deleteGroup = (index) => {
-    const groupList = JSON.parse(localStorage.getItem('groupList'));
-    const filteredGroupList = groupList.filter(
+    const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
+    const newGroupList = oldGroupList.filter(
       (_group, _index) => _index !== index,
     );
 
-    localStorage.setItem('groupList', JSON.stringify(filteredGroupList));
+    localStorage.setItem('groupList', JSON.stringify(newGroupList));
+    return localStorage.getItem('groupList');
+  };
+
+  static renameGroup = (index, name) => {
+    const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
+    const newGroupList = oldGroupList.map((_group, _index) =>
+      _index === index ? { ..._group, name } : _group,
+    );
+
+    localStorage.setItem('groupList', JSON.stringify(newGroupList));
     return localStorage.getItem('groupList');
   };
 }

@@ -59,9 +59,11 @@ const reducer = (state = initialState, action) => {
         ),
       };
     case RENAME_GROUP:
+      groupListData = JSON.parse(Api.renameGroup(action.index, action.name));
       return {
         ...state,
-        groupList: groupListForEdit,
+        groupList: [...groupListData],
+        groupListForEdit: [...groupListData],
       };
     case ADD_TODO:
       return {

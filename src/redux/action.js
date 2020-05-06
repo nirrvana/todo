@@ -36,8 +36,10 @@ export default class Action {
     name,
   });
 
-  static renameGroup = () => ({
+  static renameGroup = (index, name) => ({
     type: RENAME_GROUP,
+    index,
+    name,
   });
 
   static addTodo = (content) => ({
