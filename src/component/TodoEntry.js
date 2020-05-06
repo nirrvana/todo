@@ -10,11 +10,6 @@ class TodoEntry extends Component {
     isUpdateMode: false,
   };
 
-  deleteTodo = () => {
-    const { index, dispatchDeleteTodo } = this.props;
-    dispatchDeleteTodo(index);
-  };
-
   updateTodoContent = ({ target: { value: content } }) => {
     const { index, dispatchUpdateTodo } = this.props;
     dispatchUpdateTodo(index, content);
@@ -65,13 +60,17 @@ class TodoEntry extends Component {
   };
 
   renderDeleteTodoButton = () => {
-    const { isEditMode, isUpdateMode } = this.state;
+    const {
+      state: { isEditMode, isUpdateMode },
+      props: { index, dispatchDeleteTodo },
+    } = this;
+
     if (isEditMode && !isUpdateMode) {
       return (
         <Button
           size="sm"
           className="todo-entry-container__delete-button"
-          onClick={this.deleteTodo}
+          onClick={() => dispatchDeleteTodo(index)}
         >
           X
         </Button>
@@ -133,7 +132,7 @@ const mapStateToProps = ({ groupList, groupListForEdit, selectedIndex }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchDeleteTodo: (content) => dispatch(Action.deleteTodo(content)),
+  dispatchDeleteTodo: (index) => dispatch(Action.deleteTodo(index)),
   dispatchUpdateTodo: (index, content) =>
     dispatch(Action.updateTodo(index, content)),
   dispatchSubmitTodo: () => dispatch(Action.submitTodo()),

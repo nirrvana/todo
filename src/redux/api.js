@@ -46,4 +46,21 @@ export default class Api {
     localStorage.setItem('groupList', JSON.stringify(newGroupList));
     return localStorage.getItem('groupList');
   };
+
+  static deleteTodo = (selectedIndex, todoIndex) => {
+    const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
+    const newGroupList = oldGroupList.map((_group, _index) =>
+      _index === selectedIndex
+        ? {
+            ..._group,
+            todoList: _group.todoList.filter(
+              (_todo, _index) => _index !== todoIndex,
+            ),
+          }
+        : _group,
+    );
+
+    localStorage.setItem('groupList', JSON.stringify(newGroupList));
+    return localStorage.getItem('groupList');
+  };
 }
