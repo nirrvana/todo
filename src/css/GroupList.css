@@ -1,6 +1,7 @@
 .group-list-container {
   border-right: 3px solid #adb2b7;
   background-color: #adb2b7;
+  height: 100%;
   min-height: 100vh;
   padding: 40px;
   min-width: 500px;
