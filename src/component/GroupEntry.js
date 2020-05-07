@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Action from '../redux/action';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import '../css/GroupEntry.css';
+import { isEmpty } from '../helper';
 
 class GroupEntry extends Component {
   state = {
@@ -21,7 +22,7 @@ class GroupEntry extends Component {
     const { index, dispatchRenameGroup } = this.props;
 
     if (key === 'Enter') {
-      name = /\S/.test(name) ? name : 'Untitled';
+      name = isEmpty(name) ? 'Untitled' : name;
       dispatchRenameGroup(index, name);
       this.setState({ isRenameMode: false });
     }

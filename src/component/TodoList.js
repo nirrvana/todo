@@ -4,6 +4,7 @@ import Action from '../redux/action';
 import TodoEntry from './TodoEntry';
 import { Container, Row, Col, Button, ListGroup, Form } from 'react-bootstrap';
 import '../css/TodoList.css';
+import { isEmpty } from '../helper';
 
 class TodoList extends Component {
   state = {
@@ -20,11 +21,9 @@ class TodoList extends Component {
     window.removeEventListener('click', this.hideTodoInput);
   }
 
-  isEmpty = (content) => !/\S/.test(content);
-
   submitTodo = ({ key, target: { value: content } }) => {
     if (key === 'Enter') {
-      if (this.isEmpty(content)) {
+      if (isEmpty(content)) {
         window.alert('please input todo content');
       } else {
         this.props.dispatchAddTodo(content);

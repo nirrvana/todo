@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Action from '../redux/action';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import '../css/TodoEntry.css';
+import { isEmpty } from '../helper';
 
 class TodoEntry extends Component {
   state = {
@@ -15,11 +16,9 @@ class TodoEntry extends Component {
     dispatchUpdateTodo(index, content);
   };
 
-  isEmptyTodo = (content) => !/\S/.test(content);
-
   submitTodoContent = ({ key, target: { value: content } }) => {
     if (key === 'Enter') {
-      if (this.isEmptyTodo(content)) {
+      if (isEmpty(content)) {
         window.alert('Please input todo content');
       } else {
         this.props.dispatchSubmitTodo(this.props.index, content);

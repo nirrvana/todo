@@ -4,6 +4,7 @@ import Action from '../redux/action';
 import GroupEntry from './GroupEntry';
 import { Container, Row, Col, Button, Form, ListGroup } from 'react-bootstrap';
 import '../css/GroupList.css';
+import { isEmpty } from '../helper';
 
 class GroupList extends Component {
   state = {
@@ -26,7 +27,7 @@ class GroupList extends Component {
 
   submitGroupName = ({ key, target: { value: name } }) => {
     if (key === 'Enter') {
-      name = /\S/.test(name) ? name : 'Untitled';
+      name = isEmpty(name) ? 'Untitled' : name;
       this.setState({ isAddMode: false });
       this.props.dispatchAddGroup(name);
     }
