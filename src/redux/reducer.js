@@ -47,9 +47,9 @@ const reducer = (state = initialState, action) => {
     case DELETE_GROUP:
       groupListData = JSON.parse(Api.deleteGroup(action.index));
       return {
+        ...state,
         groupList: [...groupListData],
         groupListForEdit: [...groupListData],
-        selectedGroupIndex: null,
       };
     case UPDATE_GROUP:
       return {
