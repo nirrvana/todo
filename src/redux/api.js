@@ -36,15 +36,14 @@ export default class Api {
     const newTodo = { content, completed: false };
     const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
     const newGroupList = JSON.stringify(
-      oldGroupList.map((group, index) => {
-        return {
-          ...group,
-          todoList:
-            index === selectedGroupIndex
-              ? [...group.todoList, newTodo]
-              : group.todoList,
-        };
-      }),
+      oldGroupList.map((group, index) =>
+        index === selectedGroupIndex
+          ? {
+              ...group,
+              todoList: [...group.todoList, newTodo],
+            }
+          : group,
+      ),
     );
 
     localStorage.setItem('groupList', newGroupList);
