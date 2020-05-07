@@ -98,9 +98,9 @@ class GroupList extends Component {
   }
 }
 
-const mapStateToProps = ({ groupList, selectedIndex }) => ({
+const mapStateToProps = ({ groupList, selectedGroupIndex }) => ({
   groupList,
-  selectedIndex,
+  selectedGroupIndex,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -78,10 +78,10 @@ class TodoList extends Component {
 
   render() {
     const {
-      props: { groupList, selectedIndex },
+      props: { groupList, selectedGroupIndex },
       state: { isAddMode },
     } = this;
-    const selectedGroup = groupList[selectedIndex];
+    const selectedGroup = groupList[selectedGroupIndex];
     const todoList = selectedGroup.todoList;
 
     return (
@@ -106,9 +106,9 @@ class TodoList extends Component {
   }
 }
 
-const mapStateToProps = ({ groupList, selectedIndex }) => ({
+const mapStateToProps = ({ groupList, selectedGroupIndex }) => ({
   groupList,
-  selectedIndex,
+  selectedGroupIndex,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -12,7 +12,7 @@ class App extends Component {
   }
 
   renderTodoList = () => {
-    if (this.props.selectedIndex !== null) {
+    if (this.props.selectedGroupIndex !== null) {
       return <TodoList />;
     }
   };
@@ -31,7 +31,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ selectedIndex }) => ({ selectedIndex });
+const mapStateToProps = ({ selectedGroupIndex }) => ({ selectedGroupIndex });
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchGetGroupList: () => dispatch(Action.getGroupList()),

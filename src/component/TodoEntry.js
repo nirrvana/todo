@@ -79,9 +79,13 @@ class TodoEntry extends Component {
   };
 
   renderTodoInput = () => {
-    const { index: todoIndex, groupListForEdit, selectedIndex } = this.props;
+    const {
+      index: todoIndex,
+      groupListForEdit,
+      selectedGroupIndex,
+    } = this.props;
     const selectedGroupForEdit = groupListForEdit.filter(
-      (_group, index) => index === selectedIndex,
+      (_group, index) => index === selectedGroupIndex,
     )[0];
     const todoContentForEdit = selectedGroupForEdit.todoList[todoIndex].content;
 
@@ -125,10 +129,14 @@ class TodoEntry extends Component {
   }
 }
 
-const mapStateToProps = ({ groupList, groupListForEdit, selectedIndex }) => ({
+const mapStateToProps = ({
   groupList,
   groupListForEdit,
-  selectedIndex,
+  selectedGroupIndex,
+}) => ({
+  groupList,
+  groupListForEdit,
+  selectedGroupIndex,
 });
 
 const mapDispatchToProps = (dispatch) => ({

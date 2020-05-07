@@ -10,36 +10,36 @@ export default class Api {
     return localStorage.getItem('groupList');
   };
 
-  static deleteGroup = (index) => {
+  static deleteGroup = (groupIndex) => {
     const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
     const newGroupList = oldGroupList.filter(
-      (_group, _index) => _index !== index,
+      (_group, index) => index !== groupIndex,
     );
 
     localStorage.setItem('groupList', JSON.stringify(newGroupList));
     return localStorage.getItem('groupList');
   };
 
-  static renameGroup = (index, name) => {
+  static renameGroup = (groupIndex, name) => {
     const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
-    const newGroupList = oldGroupList.map((_group, _index) =>
-      _index === index ? { ..._group, name } : _group,
+    const newGroupList = oldGroupList.map((group, index) =>
+      index === groupIndex ? { ...group, name } : group,
     );
 
     localStorage.setItem('groupList', JSON.stringify(newGroupList));
     return localStorage.getItem('groupList');
   };
 
-  static addTodo = (selectedIndex, content) => {
+  static addTodo = (selectedGroupIndex, content) => {
     const newTodo = { content, completed: false };
     const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
-    const newGroupList = oldGroupList.map((_group, _index) => {
+    const newGroupList = oldGroupList.map((group, index) => {
       return {
-        ..._group,
+        ...group,
         todoList:
-          selectedIndex === _index
-            ? [..._group.todoList, newTodo]
-            : _group.todoList,
+          index === selectedGroupIndex
+            ? [...group.todoList, newTodo]
+            : group.todoList,
       };
     });
 
@@ -47,44 +47,44 @@ export default class Api {
     return localStorage.getItem('groupList');
   };
 
-  static deleteTodo = (selectedIndex, todoIndex) => {
-    const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
-    const newGroupList = oldGroupList.map((_group, _index) =>
-      _index === selectedIndex
-        ? {
-            ..._group,
-            todoList: _group.todoList.filter(
-              (_todo, _index) => _index !== todoIndex,
-            ),
-          }
-        : _group,
-    );
-
-    localStorage.setItem('groupList', JSON.stringify(newGroupList));
-    return localStorage.getItem('groupList');
-  };
-
-  static submitTodo = (selectedIndex, todoIndex, content) => {
-    const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
-    const newGroupList = oldGroupList.map((_group, _index) =>
-      _index === selectedIndex
-        ? {
-            ..._group,
-            todoList: _group.todoList.map((_todo, _index) =>
-              _index === todoIndex ? { ..._todo, content } : _todo,
-            ),
-          }
-        : _group,
-    );
-
-    localStorage.setItem('groupList', JSON.stringify(newGroupList));
-    return localStorage.getItem('groupList');
-  };
-
-  static completeTodo = (selectedIndex, todoIndex) => {
+  static deleteTodo = (selectedGroupIndex, todoIndex) => {
     const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
     const newGroupList = oldGroupList.map((group, index) =>
-      index === selectedIndex
+      index === selectedGroupIndex
+        ? {
+            ...group,
+            todoList: group.todoList.filter(
+              (_todo, index) => index !== todoIndex,
+            ),
+          }
+        : group,
+    );
+
+    localStorage.setItem('groupList', JSON.stringify(newGroupList));
+    return localStorage.getItem('groupList');
+  };
+
+  static submitTodo = (selectedGroupIndex, todoIndex, content) => {
+    const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
+    const newGroupList = oldGroupList.map((group, index) =>
+      index === selectedGroupIndex
+        ? {
+            ...group,
+            todoList: group.todoList.map((todo, index) =>
+              index === todoIndex ? { ...todo, content } : todo,
+            ),
+          }
+        : group,
+    );
+
+    localStorage.setItem('groupList', JSON.stringify(newGroupList));
+    return localStorage.getItem('groupList');
+  };
+
+  static completeTodo = (selectedGroupIndex, todoIndex) => {
+    const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
+    const newGroupList = oldGroupList.map((group, index) =>
+      index === selectedGroupIndex
         ? {
             ...group,
             todoList: group.todoList.map((todo, index) =>

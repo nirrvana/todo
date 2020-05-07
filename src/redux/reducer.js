@@ -17,11 +17,11 @@ import Api from './api';
 const initialState = {
   groupList: [],
   groupListForEdit: [],
-  selectedIndex: null,
+  selectedGroupIndex: null,
 };
 
 const reducer = (state = initialState, action) => {
-  let { groupList, groupListForEdit, selectedIndex } = state;
+  let { groupList, groupListForEdit, selectedGroupIndex } = state;
   let groupListData = [];
 
   switch (action.type) {
@@ -35,21 +35,21 @@ const reducer = (state = initialState, action) => {
     case SELECT_GROUP:
       return {
         ...state,
-        selectedIndex: action.index,
+        selectedGroupIndex: action.index,
       };
     case ADD_GROUP:
       groupListData = JSON.parse(Api.addGroup(action.name));
       return {
         groupList: [...groupListData],
         groupListForEdit: [...groupListData],
-        selectedIndex: groupList.length,
+        selectedGroupIndex: groupList.length,
       };
     case DELETE_GROUP:
       groupListData = JSON.parse(Api.deleteGroup(action.index));
       return {
         groupList: [...groupListData],
         groupListForEdit: [...groupListData],
-        selectedIndex: null,
+        selectedGroupIndex: null,
       };
     case UPDATE_GROUP:
       return {
@@ -66,14 +66,18 @@ const reducer = (state = initialState, action) => {
         groupListForEdit: [...groupListData],
       };
     case ADD_TODO:
-      groupListData = JSON.parse(Api.addTodo(selectedIndex, action.content));
+      groupListData = JSON.parse(
+        Api.addTodo(selectedGroupIndex, action.content),
+      );
       return {
         ...state,
         groupList: [...groupListData],
         groupListForEdit: [...groupListData],
       };
     case DELETE_TODO:
-      groupListData = JSON.parse(Api.deleteTodo(selectedIndex, action.index));
+      groupListData = JSON.parse(
+        Api.deleteTodo(selectedGroupIndex, action.index),
+      );
       return {
         ...state,
         groupList: [...groupListData],
@@ -83,7 +87,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         groupListForEdit: groupListForEdit.map((group, index) =>
-          index === selectedIndex
+          index === selectedGroupIndex
             ? {
                 ...group,
                 todoList: group.todoList.map((todo, index) =>
@@ -97,7 +101,7 @@ const reducer = (state = initialState, action) => {
       };
     case SUBMIT_TODO:
       groupListData = JSON.parse(
-        Api.submitTodo(selectedIndex, action.index, action.content),
+        Api.submitTodo(selectedGroupIndex, action.index, action.content),
       );
       return {
         ...state,
@@ -105,7 +109,9 @@ const reducer = (state = initialState, action) => {
         groupListForEdit: [...groupListData],
       };
     case COMPLETE_TODO:
-      groupListData = JSON.parse(Api.completeTodo(selectedIndex, action.index));
+      groupListData = JSON.parse(
+        Api.completeTodo(selectedGroupIndex, action.index),
+      );
       return {
         ...state,
         groupList: [...groupListData],
