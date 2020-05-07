@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  deleteTodo,
-  updateTodo,
-  submitTodo,
-  completeTodo,
-} from '../redux/action';
+import Action from '../redux/action';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import '../css/TodoEntry.css';
 
@@ -13,11 +8,6 @@ class TodoEntry extends Component {
   state = {
     isEditMode: false,
     isUpdateMode: false,
-  };
-
-  deleteTodo = () => {
-    const { index, dispatchDeleteTodo } = this.props;
-    dispatchDeleteTodo(index);
   };
 
   updateTodoContent = ({ target: { value: content } }) => {
@@ -32,7 +22,7 @@ class TodoEntry extends Component {
       if (this.isEmptyTodo(content)) {
         window.alert('Please input todo content');
       } else {
-        this.props.dispatchSubmitTodo();
+        this.props.dispatchSubmitTodo(this.props.index, content);
         this.setState({ isUpdateMode: false });
       }
     }
@@ -70,13 +60,17 @@ class TodoEntry extends Component {
   };
 
   renderDeleteTodoButton = () => {
-    const { isEditMode, isUpdateMode } = this.state;
+    const {
+      state: { isEditMode, isUpdateMode },
+      props: { index, dispatchDeleteTodo },
+    } = this;
+
     if (isEditMode && !isUpdateMode) {
       return (
         <Button
           size="sm"
           className="todo-entry-container__delete-button"
-          onClick={this.deleteTodo}
+          onClick={() => dispatchDeleteTodo(index)}
         >
           X
         </Button>
@@ -85,9 +79,13 @@ class TodoEntry extends Component {
   };
 
   renderTodoInput = () => {
-    const { index: todoIndex, groupListForEdit, selectedIndex } = this.props;
+    const {
+      index: todoIndex,
+      groupListForEdit,
+      selectedGroupIndex,
+    } = this.props;
     const selectedGroupForEdit = groupListForEdit.filter(
-      (_group, index) => index === selectedIndex,
+      (_group, index) => index === selectedGroupIndex,
     )[0];
     const todoContentForEdit = selectedGroupForEdit.todoList[todoIndex].content;
 
@@ -131,17 +129,23 @@ class TodoEntry extends Component {
   }
 }
 
-const mapStateToProps = ({ groupList, groupListForEdit, selectedIndex }) => ({
+const mapStateToProps = ({
   groupList,
   groupListForEdit,
-  selectedIndex,
+  selectedGroupIndex,
+}) => ({
+  groupList,
+  groupListForEdit,
+  selectedGroupIndex,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchDeleteTodo: (content) => dispatch(deleteTodo(content)),
-  dispatchUpdateTodo: (index, content) => dispatch(updateTodo(index, content)),
-  dispatchSubmitTodo: () => dispatch(submitTodo()),
-  dispatchCompleteTodo: (index) => dispatch(completeTodo(index)),
+  dispatchDeleteTodo: (index) => dispatch(Action.deleteTodo(index)),
+  dispatchUpdateTodo: (index, content) =>
+    dispatch(Action.updateTodo(index, content)),
+  dispatchSubmitTodo: (index, content) =>
+    dispatch(Action.submitTodo(index, content)),
+  dispatchCompleteTodo: (index) => dispatch(Action.completeTodo(index)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoEntry);

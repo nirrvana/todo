@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addGroup } from '../redux/action';
+import Action from '../redux/action';
 import GroupEntry from './GroupEntry';
 import { Container, Row, Col, Button, Form, ListGroup } from 'react-bootstrap';
 import '../css/GroupList.css';
@@ -24,13 +24,9 @@ class GroupList extends Component {
     this.setState(({ isAddMode }) => ({ isAddMode: !isAddMode }));
   };
 
-  fixEmptyGroup = (name) => {
-    return /\S/.test(name) ? name : 'Untitled';
-  };
-
   submitGroupName = ({ key, target: { value: name } }) => {
     if (key === 'Enter') {
-      name = this.fixEmptyGroup(name);
+      name = /\S/.test(name) ? name : 'Untitled';
       this.setState({ isAddMode: false });
       this.props.dispatchAddGroup(name);
     }
@@ -102,13 +98,13 @@ class GroupList extends Component {
   }
 }
 
-const mapStateToProps = ({ groupList, selectedIndex }) => ({
+const mapStateToProps = ({ groupList, selectedGroupIndex }) => ({
   groupList,
-  selectedIndex,
+  selectedGroupIndex,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchAddGroup: (name) => dispatch(addGroup(name)),
+  dispatchAddGroup: (name) => dispatch(Action.addGroup(name)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupList);

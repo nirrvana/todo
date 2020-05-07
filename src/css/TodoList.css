@@ -1,5 +1,5 @@
 .todo-list-container {
-  height: 100vh;
+  min-height: 100vh;
   padding: 4% 10% 4% 10%;
   min-width: 1000px;
   max-width: 1000px;

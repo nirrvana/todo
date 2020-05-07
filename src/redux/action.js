@@ -1,3 +1,4 @@
+export const GET_GROUP_LIST = 'GET_GROUP_LIST';
 export const SELECT_GROUP = 'SELECT_GROUP';
 export const ADD_GROUP = 'ADD_GROUP';
 export const DELETE_GROUP = 'DELETE_GROUP';
@@ -9,52 +10,62 @@ export const UPDATE_TODO = 'UPDATE_TODO';
 export const SUBMIT_TODO = 'SUBMIT_TODO';
 export const COMPLETE_TODO = 'COMPLETE_TODO';
 
-export const selectGroup = (index) => ({
-  type: SELECT_GROUP,
-  index,
-});
+export default class Action {
+  static getGroupList = () => ({
+    type: GET_GROUP_LIST,
+  });
 
-export const addGroup = (name) => ({
-  type: ADD_GROUP,
-  name,
-});
+  static selectGroup = (index) => ({
+    type: SELECT_GROUP,
+    index,
+  });
 
-export const deleteGroup = (index) => ({
-  type: DELETE_GROUP,
-  index,
-});
+  static addGroup = (name) => ({
+    type: ADD_GROUP,
+    name,
+  });
 
-export const updateGroup = (index, name) => ({
-  type: UPDATE_GROUP,
-  index,
-  name,
-});
+  static deleteGroup = (index) => ({
+    type: DELETE_GROUP,
+    index,
+  });
 
-export const renameGroup = () => ({
-  type: RENAME_GROUP,
-});
+  static updateGroup = (index, name) => ({
+    type: UPDATE_GROUP,
+    index,
+    name,
+  });
 
-export const addTodo = (content) => ({
-  type: ADD_TODO,
-  content,
-});
+  static renameGroup = (index, name) => ({
+    type: RENAME_GROUP,
+    index,
+    name,
+  });
 
-export const deleteTodo = (index) => ({
-  type: DELETE_TODO,
-  index,
-});
+  static addTodo = (content) => ({
+    type: ADD_TODO,
+    content,
+  });
 
-export const updateTodo = (index, content) => ({
-  type: UPDATE_TODO,
-  index,
-  content,
-});
+  static deleteTodo = (index) => ({
+    type: DELETE_TODO,
+    index,
+  });
 
-export const submitTodo = () => ({
-  type: SUBMIT_TODO,
-});
+  static updateTodo = (index, content) => ({
+    type: UPDATE_TODO,
+    index,
+    content,
+  });
 
-export const completeTodo = (index) => ({
-  type: COMPLETE_TODO,
-  index,
-});
+  static submitTodo = (index, content) => ({
+    type: SUBMIT_TODO,
+    index,
+    content,
+  });
+
+  static completeTodo = (index) => ({
+    type: COMPLETE_TODO,
+    index,
+  });
+}

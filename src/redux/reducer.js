@@ -1,4 +1,5 @@
 import {
+  GET_GROUP_LIST,
   SELECT_GROUP,
   ADD_GROUP,
   DELETE_GROUP,
@@ -11,52 +12,44 @@ import {
   COMPLETE_TODO,
 } from './action';
 
+import Api from './api';
+
 const initialState = {
-  groupList: [
-    {
-      name: 'coding',
-      todoList: [
-        { content: 'todo app', completed: false },
-        { content: 'next.js', completed: false },
-      ],
-    },
-  ],
-  groupListForEdit: [
-    {
-      name: 'coding',
-      todoList: [
-        { content: 'todo app', completed: false },
-        { content: 'next.js', completed: false },
-      ],
-    },
-  ],
-  selectedIndex: null,
+  groupList: [],
+  groupListForEdit: [],
+  selectedGroupIndex: null,
 };
 
 const reducer = (state = initialState, action) => {
-  let { groupList, groupListForEdit, selectedIndex } = state;
+  let { groupList, groupListForEdit, selectedGroupIndex } = state;
+  let groupListData = [];
+
   switch (action.type) {
+    case GET_GROUP_LIST:
+      groupListData = JSON.parse(Api.getGroupList());
+      return {
+        ...state,
+        groupList: [...groupListData],
+        groupListForEdit: [...groupListData],
+      };
     case SELECT_GROUP:
       return {
         ...state,
-        selectedIndex: action.index,
+        selectedGroupIndex: action.index,
       };
     case ADD_GROUP:
+      groupListData = JSON.parse(Api.addGroup(action.name));
       return {
-        groupList: [...groupList, { name: action.name, todoList: [] }],
-        groupListForEdit: [
-          ...groupListForEdit,
-          { name: action.name, todoList: [] },
-        ],
-        selectedIndex: groupList.length,
+        groupList: [...groupListData],
+        groupListForEdit: [...groupListData],
+        selectedGroupIndex: groupList.length,
       };
     case DELETE_GROUP:
+      groupListData = JSON.parse(Api.deleteGroup(action.index));
       return {
-        groupList: groupList.filter((_group, index) => index !== action.index),
-        groupListForEdit: groupListForEdit.filter(
-          (_group, index) => index !== action.index,
-        ),
-        selectedIndex: null,
+        ...state,
+        groupList: [...groupListData],
+        groupListForEdit: [...groupListData],
       };
     case UPDATE_GROUP:
       return {
@@ -66,67 +59,35 @@ const reducer = (state = initialState, action) => {
         ),
       };
     case RENAME_GROUP:
+      groupListData = JSON.parse(Api.renameGroup(action.index, action.name));
       return {
         ...state,
-        groupList: groupListForEdit,
+        groupList: [...groupListData],
+        groupListForEdit: [...groupListData],
       };
     case ADD_TODO:
+      groupListData = JSON.parse(
+        Api.addTodo(selectedGroupIndex, action.content),
+      );
       return {
         ...state,
-        groupList: groupList.map((group, index) => {
-          return {
-            ...group,
-            todoList:
-              index === selectedIndex
-                ? [
-                    ...group.todoList,
-                    { content: action.content, completed: false },
-                  ]
-                : group.todoList,
-          };
-        }),
-        groupListForEdit: groupListForEdit.map((group, index) => {
-          return {
-            ...group,
-            todoList:
-              index === selectedIndex
-                ? [
-                    ...group.todoList,
-                    { content: action.content, completed: false },
-                  ]
-                : group.todoList,
-          };
-        }),
+        groupList: [...groupListData],
+        groupListForEdit: [...groupListData],
       };
     case DELETE_TODO:
+      groupListData = JSON.parse(
+        Api.deleteTodo(selectedGroupIndex, action.index),
+      );
       return {
         ...state,
-        groupList: groupList.map((group, index) =>
-          index === selectedIndex
-            ? {
-                ...group,
-                todoList: group.todoList.filter(
-                  (_todo, index) => index !== action.index,
-                ),
-              }
-            : group,
-        ),
-        groupListForEdit: groupListForEdit.map((group, index) =>
-          index === selectedIndex
-            ? {
-                ...group,
-                todoList: group.todoList.filter(
-                  (_todo, index) => index !== action.index,
-                ),
-              }
-            : group,
-        ),
+        groupList: [...groupListData],
+        groupListForEdit: [...groupListData],
       };
     case UPDATE_TODO:
       return {
         ...state,
         groupListForEdit: groupListForEdit.map((group, index) =>
-          index === selectedIndex
+          index === selectedGroupIndex
             ? {
                 ...group,
                 todoList: group.todoList.map((todo, index) =>
@@ -139,33 +100,22 @@ const reducer = (state = initialState, action) => {
         ),
       };
     case SUBMIT_TODO:
+      groupListData = JSON.parse(
+        Api.submitTodo(selectedGroupIndex, action.index, action.content),
+      );
       return {
         ...state,
-        groupList: groupListForEdit,
+        groupList: [...groupListData],
+        groupListForEdit: [...groupListData],
       };
     case COMPLETE_TODO:
+      groupListData = JSON.parse(
+        Api.completeTodo(selectedGroupIndex, action.index),
+      );
       return {
         ...state,
-        groupList: groupList.map((group, index) =>
-          index === selectedIndex
-            ? {
-                ...group,
-                todoList: group.todoList.map((todo, index) =>
-                  index === action.index ? { ...todo, completed: true } : todo,
-                ),
-              }
-            : group,
-        ),
-        groupListForEdit: groupListForEdit.map((group, index) =>
-          index === selectedIndex
-            ? {
-                ...group,
-                todoList: group.todoList.map((todo, index) =>
-                  index === action.index ? { ...todo, completed: true } : todo,
-                ),
-              }
-            : group,
-        ),
+        groupList: [...groupListData],
+        groupListForEdit: [...groupListData],
       };
     default:
       return state;

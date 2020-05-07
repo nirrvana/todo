@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Action from './redux/action';
 import GroupList from './component/GroupList';
 import TodoList from './component/TodoList';
 import { Container, Row, Col } from 'react-bootstrap';
 import './css/App.css';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.dispatchGetGroupList();
+  }
+
   renderTodoList = () => {
-    if (this.props.selectedIndex !== null) {
+    if (this.props.selectedGroupIndex !== null) {
       return <TodoList />;
     }
   };
@@ -26,6 +31,10 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ selectedIndex }) => ({ selectedIndex });
+const mapStateToProps = ({ selectedGroupIndex }) => ({ selectedGroupIndex });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => ({
+  dispatchGetGroupList: () => dispatch(Action.getGroupList()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

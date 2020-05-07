@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  selectGroup,
-  deleteGroup,
-  updateGroup,
-  renameGroup,
-} from '../redux/action';
+import Action from '../redux/action';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import '../css/GroupEntry.css';
 
@@ -22,17 +17,12 @@ class GroupEntry extends Component {
     dispatchUpdateGroup(index, name);
   };
 
-  isEmptyGroup = (name) => !/\S/.test(name);
-
   submitGroupName = ({ key, target: { value: name } }) => {
-    const { index, dispatchUpdateGroup, dispatchRenameGroup } = this.props;
+    const { index, dispatchRenameGroup } = this.props;
 
     if (key === 'Enter') {
-      if (this.isEmptyGroup(name)) {
-        name = 'Untitled';
-        dispatchUpdateGroup(index, name);
-      }
-      dispatchRenameGroup();
+      name = /\S/.test(name) ? name : 'Untitled';
+      dispatchRenameGroup(index, name);
       this.setState({ isRenameMode: false });
     }
   };
@@ -135,10 +125,12 @@ const mapStateToProps = ({ groupListForEdit }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchSelectGroup: (index) => dispatch(selectGroup(index)),
-  dispatchDeleteGroup: (index) => dispatch(deleteGroup(index)),
-  dispatchUpdateGroup: (index, name) => dispatch(updateGroup(index, name)),
-  dispatchRenameGroup: () => dispatch(renameGroup()),
+  dispatchSelectGroup: (index) => dispatch(Action.selectGroup(index)),
+  dispatchDeleteGroup: (index) => dispatch(Action.deleteGroup(index)),
+  dispatchUpdateGroup: (index, name) =>
+    dispatch(Action.updateGroup(index, name)),
+  dispatchRenameGroup: (index, name) =>
+    dispatch(Action.renameGroup(index, name)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupEntry);

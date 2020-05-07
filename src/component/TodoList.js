@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addTodo } from '../redux/action';
+import Action from '../redux/action';
 import TodoEntry from './TodoEntry';
 import { Container, Row, Col, Button, ListGroup, Form } from 'react-bootstrap';
 import '../css/TodoList.css';
@@ -78,10 +78,10 @@ class TodoList extends Component {
 
   render() {
     const {
-      props: { groupList, selectedIndex },
+      props: { groupList, selectedGroupIndex },
       state: { isAddMode },
     } = this;
-    const selectedGroup = groupList[selectedIndex];
+    const selectedGroup = groupList[selectedGroupIndex];
     const todoList = selectedGroup.todoList;
 
     return (
@@ -106,13 +106,13 @@ class TodoList extends Component {
   }
 }
 
-const mapStateToProps = ({ groupList, selectedIndex }) => ({
+const mapStateToProps = ({ groupList, selectedGroupIndex }) => ({
   groupList,
-  selectedIndex,
+  selectedGroupIndex,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchAddTodo: (content) => dispatch(addTodo(content)),
+  dispatchAddTodo: (content) => dispatch(Action.addTodo(content)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
