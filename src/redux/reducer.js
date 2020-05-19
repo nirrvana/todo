@@ -21,7 +21,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  let { groupList, groupListForEdit, selectedGroupIndex } = state;
+  let { groupListForEdit, selectedGroupIndex } = state;
   let groupListData = [];
 
   switch (action.type) {
@@ -40,16 +40,21 @@ const reducer = (state = initialState, action) => {
     case ADD_GROUP:
       groupListData = JSON.parse(Api.addGroup(action.name));
       return {
+        ...state,
         groupList: [...groupListData],
         groupListForEdit: [...groupListData],
-        selectedGroupIndex: groupList.length,
       };
     case DELETE_GROUP:
       groupListData = JSON.parse(Api.deleteGroup(action.index));
       return {
-        ...state,
         groupList: [...groupListData],
         groupListForEdit: [...groupListData],
+        selectedGroupIndex:
+          selectedGroupIndex === action.index
+            ? null
+            : selectedGroupIndex > action.index
+            ? selectedGroupIndex - 1
+            : selectedGroupIndex,
       };
     case UPDATE_GROUP:
       return {
