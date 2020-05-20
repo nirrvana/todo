@@ -1,6 +1,9 @@
 .todo-entry-container {
-  width: 100%;
+  width: 758.8px;
   padding: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .todo-entry-container__wrapper {
@@ -38,11 +41,8 @@
   width: 100%;
 }
 
-.todo-entry-container__input {
-  border: none;
-  width: 100%;
-  margin-left: 50px;
+.todo-entry-container__form-control {
   max-width: 500px;
-  height: 50px;
   padding: 0;
+  margin-left: 50px;
 }

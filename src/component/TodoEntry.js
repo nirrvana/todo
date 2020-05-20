@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Action from '../redux/action';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form, InputGroup } from 'react-bootstrap';
 import '../css/TodoEntry.css';
 import { isEmpty } from '../helper';
 
@@ -16,8 +16,8 @@ class TodoEntry extends Component {
     dispatchUpdateTodo(index, content);
   };
 
-  submitTodoContent = ({ key, target: { value: content } }) => {
-    if (key === 'Enter') {
+  submitTodoContent = (content) => ({ key, type }) => {
+    if (key === 'Enter' || type === 'click') {
       if (isEmpty(content)) {
         window.alert('Please input todo content');
       } else {
@@ -90,14 +90,24 @@ class TodoEntry extends Component {
 
     return (
       <Row noGutters={true} className="todo-entry-container__wrapper">
-        <Col>
-          <input
-            autoFocus
-            className="todo-entry-container__input"
-            value={todoContentForEdit}
-            onChange={this.updateTodoContent}
-            onKeyDown={this.submitTodoContent}
-          />
+        <Col className="todo-entry-container__input-group-area">
+          <InputGroup className="mb-3 todo-entry-container__input-group">
+            <Form.Control
+              autoFocus
+              className="todo-entry-container__form-control"
+              value={todoContentForEdit}
+              onChange={this.updateTodoContent}
+              onKeyDown={this.submitTodoContent(todoContentForEdit)}
+            />
+            <InputGroup.Append>
+              <Button
+                size="sm"
+                onClick={this.submitTodoContent(todoContentForEdit)}
+              >
+                edit
+              </Button>
+            </InputGroup.Append>
+          </InputGroup>
         </Col>
       </Row>
     );

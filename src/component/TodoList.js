@@ -36,7 +36,7 @@ class TodoList extends Component {
         window.alert('please input todo content');
       } else {
         this.props.dispatchAddTodo(content);
-        this.setState({ isAddMode: false });
+        this.setState({ isAddMode: false, content: '' });
       }
     }
   };
@@ -84,7 +84,7 @@ class TodoList extends Component {
         <ListGroup>
           {todoList.map((todo, index) =>
             todo.completed ? null : (
-              <ListGroup.Item>
+              <ListGroup.Item className="todo-list-container__list-group-item">
                 <TodoEntry key={index} index={index} todo={todo} />
               </ListGroup.Item>
             ),
