@@ -53,6 +53,7 @@ class GroupEntry extends Component {
       return (
         <Button
           size="sm"
+          variant="outline-danger"
           className="group-entry-container__delete-button"
           onClick={() => dispatchDeleteGroup(index)}
         >
@@ -67,6 +68,7 @@ class GroupEntry extends Component {
       return (
         <Button
           size="sm"
+          variant="outline-success"
           className="group-entry-container__rename-button"
           onClick={() => this.setState({ isRenameMode: true })}
         >
@@ -91,7 +93,11 @@ class GroupEntry extends Component {
           onKeyDown={this.submitGroupName(groupNameForEdit)}
         />
         <InputGroup.Append>
-          <Button size="sm" onClick={this.submitGroupName(groupNameForEdit)}>
+          <Button
+            size="sm"
+            variant="outline-info"
+            onClick={this.submitGroupName(groupNameForEdit)}
+          >
             submit
           </Button>
         </InputGroup.Append>

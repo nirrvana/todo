@@ -68,7 +68,11 @@ class TodoList extends Component {
               onClick={this.hideTodoInput}
             />
             <InputGroup.Append>
-              <Button size="sm" onClick={this.submitTodo(content)}>
+              <Button
+                size="sm"
+                variant="outline-info"
+                onClick={this.submitTodo(content)}
+              >
                 submit
               </Button>
             </InputGroup.Append>
@@ -111,6 +115,7 @@ class TodoList extends Component {
       >
         <Row noGutters={true}>
           <Button
+            variant="outline-dark"
             className="todo-list-container__add-button"
             onClick={() => this.setState({ isAddMode: !isAddMode })}
           >

@@ -70,6 +70,7 @@ class GroupList extends Component {
       >
         <Row noGutters={true} className="group-list-container__wrapper">
           <Button
+            variant="outline-danger"
             className="group-list-container__add-button"
             onClick={this.toggleAddMode}
           >
@@ -83,7 +84,7 @@ class GroupList extends Component {
           <Col className="group-list-container__group-entry-area">
             <ListGroup>
               {groupList.map((group, index) => (
-                <ListGroup.Item>
+                <ListGroup.Item className="group-list-container__list-group-item">
                   <GroupEntry
                     key={index}
                     index={index}

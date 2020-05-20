@@ -68,6 +68,7 @@ class TodoEntry extends Component {
       return (
         <Button
           size="sm"
+          variant="outline-danger"
           className="todo-entry-container__delete-button"
           onClick={() => dispatchDeleteTodo(index)}
         >
@@ -102,6 +103,7 @@ class TodoEntry extends Component {
             <InputGroup.Append>
               <Button
                 size="sm"
+                variant="outline-info"
                 onClick={this.submitTodoContent(todoContentForEdit)}
               >
                 edit

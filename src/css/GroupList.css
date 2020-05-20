@@ -1,6 +1,6 @@
 .group-list-container {
-  border-right: 3px solid #adb2b7;
-  background-color: #adb2b7;
+  border-right: 3px solid #293241;
+  background-color: #293241;
   height: 100%;
   min-height: 100vh;
   padding: 40px;
@@ -8,9 +8,16 @@
   max-width: 500px;
 }
 
+.group-list-container__list-group-item:hover {
+  background-color: #e0fbfc;
+}
+
 .group-list-container__add-button {
   width: 100%;
   margin-bottom: 8px;
+  background-color: #ee6c4d;
+  border-color: #ee6c4d;
+  color: white;
 }
 
 .group-list-container__input {
