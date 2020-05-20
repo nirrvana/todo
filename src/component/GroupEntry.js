@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Action from '../redux/action';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form, InputGroup } from 'react-bootstrap';
 import '../css/GroupEntry.css';
 import { isEmpty } from '../helper';
 
@@ -18,12 +18,14 @@ class GroupEntry extends Component {
     dispatchUpdateGroup(index, name);
   };
 
-  submitGroupName = ({ key, target: { value: name } }) => {
+  submitGroupName = (groupNameForEdit) => ({ key, type }) => {
     const { index, dispatchRenameGroup } = this.props;
 
-    if (key === 'Enter') {
-      name = isEmpty(name) ? 'Untitled' : name;
-      dispatchRenameGroup(index, name);
+    if (key === 'Enter' || type === 'submit') {
+      const groupName = isEmpty(groupNameForEdit)
+        ? 'Untitled'
+        : groupNameForEdit;
+      dispatchRenameGroup(index, groupName);
       this.setState({ isRenameMode: false });
     }
   };
@@ -81,13 +83,21 @@ class GroupEntry extends Component {
     )[0].name;
 
     return (
-      <input
-        className="group-entry-element__input"
-        autoFocus
-        value={groupNameForEdit}
-        onChange={this.updateGroupName}
-        onKeyDown={this.submitGroupName}
-      />
+      <Form onSubmit={this.submitGroupName(groupNameForEdit)}>
+        <InputGroup className="mb-3">
+          <Form.Control
+            autoFocus
+            value={groupNameForEdit}
+            onChange={this.updateGroupName}
+            onKeyDown={this.submitGroupName(groupNameForEdit)}
+          />
+          <InputGroup.Append>
+            <Button size="sm" type="submit">
+              submit
+            </Button>
+          </InputGroup.Append>
+        </InputGroup>
+      </Form>
     );
   };
 
