@@ -74,7 +74,7 @@ class GroupList extends Component {
             className="group-list-container__add-button"
             onClick={this.toggleAddMode}
           >
-            + Add Group
+            {isAddMode ? 'End' : '+ Add Group'}
           </Button>
         </Row>
         <Row noGutters={true} className="group-list-container__wrapper">

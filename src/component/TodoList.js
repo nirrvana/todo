@@ -119,7 +119,7 @@ class TodoList extends Component {
             className="todo-list-container__add-button"
             onClick={() => this.setState({ isAddMode: !isAddMode })}
           >
-            +
+            {isAddMode ? 'End' : '+'}
           </Button>
         </Row>
         <Row noGutters={true} className="todo-list-container__list">
