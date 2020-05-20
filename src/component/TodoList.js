@@ -2,13 +2,22 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Action from '../redux/action';
 import TodoEntry from './TodoEntry';
-import { Container, Row, Col, Button, ListGroup, Form } from 'react-bootstrap';
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  ListGroup,
+  Form,
+  InputGroup,
+} from 'react-bootstrap';
 import '../css/TodoList.css';
 import { isEmpty } from '../helper';
 
 class TodoList extends Component {
   state = {
     isAddMode: false,
+    content: '',
   };
 
   todoListContainer = React.createRef();
@@ -21,8 +30,8 @@ class TodoList extends Component {
     window.removeEventListener('click', this.hideTodoInput);
   }
 
-  submitTodo = ({ key, target: { value: content } }) => {
-    if (key === 'Enter') {
+  submitTodo = (content) => ({ key, type }) => {
+    if (key === 'Enter' || type === 'click') {
       if (isEmpty(content)) {
         window.alert('please input todo content');
       } else {
@@ -42,37 +51,48 @@ class TodoList extends Component {
   };
 
   renderTodoInput = () => {
-    return (
-      <Col>
-        <Form.Control
-          autoFocus
-          className="todo-list-container__input"
-          placeholder="todo"
-          onKeyDown={this.submitTodo}
-          onClick={this.hideTodoInput}
-        />
-      </Col>
-    );
-  };
+    const { isAddMode, content } = this.state;
 
-  renderListOrInput = (isAddMode, todoList) => {
     if (isAddMode) {
-      return this.renderTodoInput();
-    } else {
       return (
-        <Col>
-          <ListGroup>
-            {todoList.map((todo, index) =>
-              todo.completed ? null : (
-                <ListGroup.Item>
-                  <TodoEntry key={index} index={index} todo={todo} />
-                </ListGroup.Item>
-              ),
-            )}
-          </ListGroup>
-        </Col>
+        <ListGroup.Item className="todo-list-container__list-group-item">
+          <InputGroup className="mb-3 todo-list-container__input-group">
+            <Form.Control
+              autoFocus
+              className="todo-list-container__form-control"
+              placeholder="todo"
+              onKeyDown={this.submitTodo(content)}
+              onChange={(event) =>
+                this.setState({ content: event.target.value })
+              }
+              onClick={this.hideTodoInput}
+            />
+            <InputGroup.Append>
+              <Button size="sm" onClick={this.submitTodo(content)}>
+                submit
+              </Button>
+            </InputGroup.Append>
+          </InputGroup>
+        </ListGroup.Item>
       );
     }
+  };
+
+  renderListOrInput = (todoList) => {
+    return (
+      <Col>
+        <ListGroup>
+          {todoList.map((todo, index) =>
+            todo.completed ? null : (
+              <ListGroup.Item>
+                <TodoEntry key={index} index={index} todo={todo} />
+              </ListGroup.Item>
+            ),
+          )}
+          {this.renderTodoInput()}
+        </ListGroup>
+      </Col>
+    );
   };
 
   render() {
@@ -98,7 +118,7 @@ class TodoList extends Component {
           </Button>
         </Row>
         <Row noGutters={true} className="todo-list-container__list">
-          {this.renderListOrInput(isAddMode, todoList)}
+          {this.renderListOrInput(todoList)}
         </Row>
       </Container>
     );

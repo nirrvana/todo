@@ -21,7 +21,7 @@ class GroupEntry extends Component {
   submitGroupName = (groupNameForEdit) => ({ key, type }) => {
     const { index, dispatchRenameGroup } = this.props;
 
-    if (key === 'Enter' || type === 'submit') {
+    if (key === 'Enter' || type === 'click') {
       const groupName = isEmpty(groupNameForEdit)
         ? 'Untitled'
         : groupNameForEdit;
@@ -83,21 +83,19 @@ class GroupEntry extends Component {
     )[0].name;
 
     return (
-      <Form onSubmit={this.submitGroupName(groupNameForEdit)}>
-        <InputGroup className="mb-3">
-          <Form.Control
-            autoFocus
-            value={groupNameForEdit}
-            onChange={this.updateGroupName}
-            onKeyDown={this.submitGroupName(groupNameForEdit)}
-          />
-          <InputGroup.Append>
-            <Button size="sm" type="submit">
-              submit
-            </Button>
-          </InputGroup.Append>
-        </InputGroup>
-      </Form>
+      <InputGroup className="mb-3">
+        <Form.Control
+          autoFocus
+          value={groupNameForEdit}
+          onChange={this.updateGroupName}
+          onKeyDown={this.submitGroupName(groupNameForEdit)}
+        />
+        <InputGroup.Append>
+          <Button size="sm" onClick={this.submitGroupName(groupNameForEdit)}>
+            submit
+          </Button>
+        </InputGroup.Append>
+      </InputGroup>
     );
   };
 
