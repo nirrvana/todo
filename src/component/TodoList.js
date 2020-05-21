@@ -10,6 +10,7 @@ import {
   ListGroup,
   Form,
   InputGroup,
+  Modal,
 } from 'react-bootstrap';
 import '../css/TodoList.css';
 import { isEmpty } from '../helper';
@@ -18,6 +19,7 @@ class TodoList extends Component {
   state = {
     isAddMode: false,
     content: '',
+    isShowMode: false,
   };
 
   todoListContainer = React.createRef();
@@ -30,10 +32,29 @@ class TodoList extends Component {
     window.removeEventListener('click', this.hideTodoInput);
   }
 
+  showAlert = () => {
+    return (
+      <Modal show={this.state.isShowMode}>
+        <Modal.Header>
+          <Modal.Title>Empty content..</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Please enter the content.</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="outline-info"
+            onClick={() => this.setState({ isShowMode: false })}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  };
+
   submitTodo = (content) => ({ key, type }) => {
     if (key === 'Enter' || type === 'click') {
       if (isEmpty(content)) {
-        window.alert('please input todo content');
+        this.setState({ isShowMode: true });
       } else {
         this.props.dispatchAddTodo(content);
         this.setState({ isAddMode: false, content: '' });
@@ -61,10 +82,10 @@ class TodoList extends Component {
               autoFocus
               className="todo-list-container__form-control"
               placeholder="todo"
-              onKeyDown={this.submitTodo(content)}
-              onChange={(event) =>
-                this.setState({ content: event.target.value })
+              onChange={({ target: { value: content } }) =>
+                this.setState({ content })
               }
+              onKeyDown={this.submitTodo(content)}
               onClick={this.hideTodoInput}
             />
             <InputGroup.Append>
@@ -125,6 +146,7 @@ class TodoList extends Component {
         <Row noGutters={true} className="todo-list-container__list">
           {this.renderListOrInput(todoList)}
         </Row>
+        {this.showAlert()}
       </Container>
     );
   }

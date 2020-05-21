@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Action from '../redux/action';
-import { Container, Row, Col, Button, Form, InputGroup } from 'react-bootstrap';
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Form,
+  InputGroup,
+  Modal,
+} from 'react-bootstrap';
 import '../css/TodoEntry.css';
 import { isEmpty } from '../helper';
 
@@ -9,6 +17,7 @@ class TodoEntry extends Component {
   state = {
     isEditMode: false,
     isUpdateMode: false,
+    isShowMode: false,
   };
 
   updateTodoContent = ({ target: { value: content } }) => {
@@ -16,10 +25,29 @@ class TodoEntry extends Component {
     dispatchUpdateTodo(index, content);
   };
 
+  showAlert = () => {
+    return (
+      <Modal show={this.state.isShowMode}>
+        <Modal.Header>
+          <Modal.Title>Empty content..</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Please enter the content.</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="outline-info"
+            onClick={() => this.setState({ isShowMode: false })}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  };
+
   submitTodoContent = (content) => ({ key, type }) => {
     if (key === 'Enter' || type === 'click') {
       if (isEmpty(content)) {
-        window.alert('Please input todo content');
+        this.setState({ isShowMode: true });
       } else {
         this.props.dispatchSubmitTodo(this.props.index, content);
         this.setState({ isUpdateMode: false });
@@ -135,6 +163,7 @@ class TodoEntry extends Component {
         onMouseLeave={() => this.setState({ isEditMode: false })}
       >
         {this.renderTodoOrInput()}
+        {this.showAlert()}
       </Container>
     );
   }
