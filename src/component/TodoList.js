@@ -27,7 +27,7 @@ class TodoList extends Component {
     content: '',
     isAddMode: false,
     isShowMode: false,
-    isSpreadMode: false,
+    isSpreadMode: true,
   };
 
   todoListContainer = React.createRef();
@@ -114,10 +114,13 @@ class TodoList extends Component {
   renderListOrInput = (todoList) => {
     if (todoList.length === 0) {
       return (
-        <Alert className="todo-list-container__alert">
-          <InfoIcon className="todo-list-container__info-icon" />
-          List is empty.
-        </Alert>
+        <Col>
+          <Alert className="todo-list-container__alert">
+            <InfoIcon className="todo-list-container__info-icon" />
+            List is empty.
+          </Alert>
+          {this.renderTodoInput()}
+        </Col>
       );
     } else {
       return (
@@ -158,15 +161,19 @@ class TodoList extends Component {
       );
   };
 
-  renderCompletedTodo = (todoList, isSpreadMode) => {
-    if (isSpreadMode) {
-      let completedTodoCount = 0;
-      for (const todo of todoList) {
-        if (todo.completed) {
-          completedTodoCount += 1;
-        }
+  countCompletedTodo = (todoList) => {
+    let completedTodoCount = 0;
+    for (const todo of todoList) {
+      if (todo.completed) {
+        completedTodoCount += 1;
       }
-      if (completedTodoCount === 0) {
+    }
+    return completedTodoCount;
+  };
+
+  renderCompletedTodo = (todoList, isSpreadMode) => {
+    if (isSpreadMode && todoList.length > 0) {
+      if (this.countCompletedTodo(todoList) === 0) {
         return (
           <Alert className="todo-list-container__alert">
             <InfoIcon className="todo-list-container__info-icon" />
