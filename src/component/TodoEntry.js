@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Action from '../redux/action';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Form,
+  InputGroup,
+  Modal,
+} from 'react-bootstrap';
+import { BsCheck as CheckIcon } from 'react-icons/bs';
 import '../css/TodoEntry.css';
 import { isEmpty } from '../helper';
 
@@ -9,6 +18,7 @@ class TodoEntry extends Component {
   state = {
     isEditMode: false,
     isUpdateMode: false,
+    isShowMode: false,
   };
 
   updateTodoContent = ({ target: { value: content } }) => {
@@ -16,10 +26,29 @@ class TodoEntry extends Component {
     dispatchUpdateTodo(index, content);
   };
 
-  submitTodoContent = ({ key, target: { value: content } }) => {
-    if (key === 'Enter') {
+  showAlert = () => {
+    return (
+      <Modal show={this.state.isShowMode}>
+        <Modal.Header>
+          <Modal.Title>Empty content..</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Please enter the content.</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="outline-info"
+            onClick={() => this.setState({ isShowMode: false })}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  };
+
+  submitTodoContent = (content) => ({ key, type }) => {
+    if (key === 'Enter' || type === 'click') {
       if (isEmpty(content)) {
-        window.alert('Please input todo content');
+        this.setState({ isShowMode: true });
       } else {
         this.props.dispatchSubmitTodo(this.props.index, content);
         this.setState({ isUpdateMode: false });
@@ -58,6 +87,34 @@ class TodoEntry extends Component {
     );
   };
 
+  renderCompletedTodo = () => {
+    const { index: todoIndex, todo, dispatchIncompleteTodo } = this.props;
+
+    return (
+      <Row
+        noGutters={true}
+        className="todo-entry-container__wrapper flex-nowrap"
+      >
+        <Col className="todo-entry-container__check-box-area">
+          <input
+            className="todo-entry-container__check-box"
+            type="checkbox"
+            checked={todo.completed}
+            onChange={() => dispatchIncompleteTodo(todoIndex)}
+          />
+        </Col>
+        <Col className="todo-entry-container__completed-content-area">
+          <div className="todo-entry-container__completed-content">
+            {todo.content}
+          </div>
+        </Col>
+        <Col className="todo-entry-container__delete-button-area">
+          {this.renderDeleteTodoButton()}
+        </Col>
+      </Row>
+    );
+  };
+
   renderDeleteTodoButton = () => {
     const {
       state: { isEditMode, isUpdateMode },
@@ -68,6 +125,7 @@ class TodoEntry extends Component {
       return (
         <Button
           size="sm"
+          variant="outline-danger"
           className="todo-entry-container__delete-button"
           onClick={() => dispatchDeleteTodo(index)}
         >
@@ -90,14 +148,25 @@ class TodoEntry extends Component {
 
     return (
       <Row noGutters={true} className="todo-entry-container__wrapper">
-        <Col>
-          <input
-            autoFocus
-            className="todo-entry-container__input"
-            value={todoContentForEdit}
-            onChange={this.updateTodoContent}
-            onKeyDown={this.submitTodoContent}
-          />
+        <Col className="todo-entry-container__input-group-area">
+          <InputGroup className="mb-3 todo-entry-container__input-group">
+            <Form.Control
+              autoFocus
+              className="todo-entry-container__form-control"
+              value={todoContentForEdit}
+              onChange={this.updateTodoContent}
+              onKeyDown={this.submitTodoContent(todoContentForEdit)}
+            />
+            <InputGroup.Append>
+              <Button
+                size="sm"
+                variant="outline-info"
+                onClick={this.submitTodoContent(todoContentForEdit)}
+              >
+                <CheckIcon />
+              </Button>
+            </InputGroup.Append>
+          </InputGroup>
         </Col>
       </Row>
     );
@@ -109,8 +178,12 @@ class TodoEntry extends Component {
 
     if (isUpdateMode) {
       return this.renderTodoInput();
-    } else if (!isUpdateMode && !todo.completed) {
-      return this.renderTodo();
+    } else {
+      if (todo.completed) {
+        return this.renderCompletedTodo();
+      } else {
+        return this.renderTodo();
+      }
     }
   };
 
@@ -123,6 +196,7 @@ class TodoEntry extends Component {
         onMouseLeave={() => this.setState({ isEditMode: false })}
       >
         {this.renderTodoOrInput()}
+        {this.showAlert()}
       </Container>
     );
   }
@@ -145,6 +219,7 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchSubmitTodo: (index, content) =>
     dispatch(Action.submitTodo(index, content)),
   dispatchCompleteTodo: (index) => dispatch(Action.completeTodo(index)),
+  dispatchIncompleteTodo: (index) => dispatch(Action.incompleteTodo(index)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoEntry);
