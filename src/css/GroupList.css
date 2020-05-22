@@ -20,6 +20,14 @@
   color: white;
 }
 
-.group-list-container__input {
+.group-list-container__input-group-area {
   margin-bottom: 8px;
+}
+
+.group-list-container__form-control {
+  padding: 0 12px 0 12px;
+}
+
+.group-list-container__check-button {
+  background-color: #fff;
 }

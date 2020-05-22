@@ -2,12 +2,22 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Action from '../redux/action';
 import GroupEntry from './GroupEntry';
-import { Container, Row, Col, Button, Form, ListGroup } from 'react-bootstrap';
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Form,
+  ListGroup,
+  InputGroup,
+} from 'react-bootstrap';
+import { BsCheck as CheckIcon } from 'react-icons/bs';
 import '../css/GroupList.css';
 import { isEmpty } from '../helper';
 
 class GroupList extends Component {
   state = {
+    name: '',
     isAddMode: false,
   };
 
@@ -21,15 +31,11 @@ class GroupList extends Component {
     window.removeEventListener('click', this.hideGroupNameInput);
   }
 
-  toggleAddMode = () => {
-    this.setState(({ isAddMode }) => ({ isAddMode: !isAddMode }));
-  };
-
-  submitGroupName = ({ key, target: { value: name } }) => {
-    if (key === 'Enter') {
-      name = isEmpty(name) ? 'Untitled' : name;
-      this.setState({ isAddMode: false });
+  submitGroupName = (groupName) => ({ key, type }) => {
+    if (key === 'Enter' || type === 'click') {
+      const name = isEmpty(groupName) ? 'Untitled' : groupName;
       this.props.dispatchAddGroup(name);
+      this.setState({ isAddMode: false, name: '' });
     }
   };
 
@@ -43,15 +49,33 @@ class GroupList extends Component {
   };
 
   renderGroupNameInput = (isAddMode) => {
+    const { name } = this.state;
+
     if (isAddMode) {
       return (
-        <Form.Control
-          autoFocus
-          placeholder="group name"
-          className="group-list-container__input"
-          onKeyDown={this.submitGroupName}
-          onClick={this.hideGroupNameInput}
-        />
+        <Col className="group-list-container__input-group-area">
+          <InputGroup className="mb-3">
+            <Form.Control
+              autoFocus
+              placeholder="group name"
+              className="group-list-container__form-control"
+              onChange={({ target: { value: name } }) =>
+                this.setState({ name })
+              }
+              onKeyDown={this.submitGroupName(name)}
+              onClick={this.hideGroupNameInput}
+            />
+            <InputGroup.Append>
+              <Button
+                variant="outline-info"
+                className="group-list-container__check-button"
+                onClick={this.submitGroupName(name)}
+              >
+                <CheckIcon />
+              </Button>
+            </InputGroup.Append>
+          </InputGroup>
+        </Col>
       );
     }
   };
@@ -72,7 +96,7 @@ class GroupList extends Component {
           <Button
             variant="outline-danger"
             className="group-list-container__add-button"
-            onClick={this.toggleAddMode}
+            onClick={() => this.setState({ isAddMode: !isAddMode })}
           >
             {isAddMode ? 'End' : '+ Add Group'}
           </Button>
