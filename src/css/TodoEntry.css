@@ -41,6 +41,10 @@
   width: 100%;
 }
 
+.todo-entry-container__content:hover {
+  text-decoration: underline;
+}
+
 .todo-entry-container__form-control {
   max-width: 500px;
   padding: 0;
