@@ -1,9 +1,23 @@
 export default class Api {
   static getGroupList = () => {
+    let groupList;
     const groupListData = JSON.parse(localStorage.getItem('groupList'));
-    const groupList = JSON.stringify(
-      Array.isArray(groupListData) ? groupListData : [],
-    );
+
+    if (Array.isArray(groupListData)) {
+      groupList = JSON.stringify(groupListData);
+    } else {
+      const defaultGroupList = JSON.stringify([
+        {
+          name: 'Untitled',
+          todoList: [
+            { content: 'todo1', completed: false },
+            { content: 'todo2', completed: true },
+          ],
+        },
+      ]);
+      localStorage.setItem('groupList', defaultGroupList);
+      groupList = defaultGroupList;
+    }
     return groupList;
   };
 
