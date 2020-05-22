@@ -6,6 +6,9 @@
 }
 
 .todo-list-container__add-button {
+  background-color: #3d5a80;
+  border-color: #3d5a80;
+  color: white;
   border-radius: 100%;
   width: 50px;
   height: 50px;
@@ -15,7 +18,38 @@
   right: 2.5%;
 }
 
-.todo-list-container__input {
-  width: 100%;
-  height: 15vh;
+.todo-list-container__alert {
+  color: gray;
+}
+
+.todo-list-container__info-icon {
+  margin-right: 10px;
+}
+
+.todo-list-container__completed-list {
+  margin-top: 30px;
+}
+
+.todo-list-container__list-group-item {
+  position: relative;
+  height: 75px;
+}
+
+.todo-list-container__list-group-item:hover {
+  background-color: #e0fbfc;
+}
+
+.todo-list-container__completed-list-group-item:hover {
+  background-color: #e1ebec;
+}
+
+.todo-list-container__input-group {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.todo-list-container__form-control {
+  margin-left: 50px;
+  max-width: 500px;
 }

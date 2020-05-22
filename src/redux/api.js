@@ -1,11 +1,32 @@
 export default class Api {
-  static getGroupList = () => localStorage.getItem('groupList');
+  static getGroupList = () => {
+    let groupList;
+    const groupListData = JSON.parse(localStorage.getItem('groupList'));
+
+    if (Array.isArray(groupListData)) {
+      groupList = JSON.stringify(groupListData);
+    } else {
+      const defaultGroupList = JSON.stringify([
+        {
+          name: 'Untitled',
+          todoList: [
+            { content: 'todo1', completed: false },
+            { content: 'todo2', completed: true },
+          ],
+        },
+      ]);
+      localStorage.setItem('groupList', defaultGroupList);
+      groupList = defaultGroupList;
+    }
+    return groupList;
+  };
 
   static addGroup = (name) => {
     const newGroup = { name, todoList: [] };
     const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
-    const newGroupList = JSON.stringify([...oldGroupList, newGroup]);
-
+    const newGroupList = JSON.stringify(
+      Array.isArray(oldGroupList) ? [...oldGroupList, newGroup] : [newGroup],
+    );
     localStorage.setItem('groupList', newGroupList);
     return newGroupList;
   };
@@ -97,6 +118,25 @@ export default class Api {
               ...group,
               todoList: group.todoList.map((todo, index) =>
                 index === todoIndex ? { ...todo, completed: true } : todo,
+              ),
+            }
+          : group,
+      ),
+    );
+
+    localStorage.setItem('groupList', newGroupList);
+    return newGroupList;
+  };
+
+  static incompleteTodo = (selectedGroupIndex, todoIndex) => {
+    const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
+    const newGroupList = JSON.stringify(
+      oldGroupList.map((group, index) =>
+        index === selectedGroupIndex
+          ? {
+              ...group,
+              todoList: group.todoList.map((todo, index) =>
+                index === todoIndex ? { ...todo, completed: false } : todo,
               ),
             }
           : group,
