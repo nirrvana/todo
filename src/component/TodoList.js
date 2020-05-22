@@ -17,6 +17,7 @@ import {
   BsFillCaretRightFill as OpenCompletedTodoIcon,
   BsFillCaretDownFill as CloseCompletedTodoIcon,
   BsInfoCircle as InfoIcon,
+  BsCheck as CheckIcon,
 } from 'react-icons/bs';
 import '../css/TodoList.css';
 import { isEmpty } from '../helper';
@@ -101,7 +102,7 @@ class TodoList extends Component {
                 variant="outline-info"
                 onClick={this.submitTodo(content)}
               >
-                submit
+                <CheckIcon />
               </Button>
             </InputGroup.Append>
           </InputGroup>

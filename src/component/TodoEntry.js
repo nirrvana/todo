@@ -10,6 +10,7 @@ import {
   InputGroup,
   Modal,
 } from 'react-bootstrap';
+import { BsCheck as CheckIcon } from 'react-icons/bs';
 import '../css/TodoEntry.css';
 import { isEmpty } from '../helper';
 
@@ -162,7 +163,7 @@ class TodoEntry extends Component {
                 variant="outline-info"
                 onClick={this.submitTodoContent(todoContentForEdit)}
               >
-                edit
+                <CheckIcon />
               </Button>
             </InputGroup.Append>
           </InputGroup>

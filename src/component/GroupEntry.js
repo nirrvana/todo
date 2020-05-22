@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Action from '../redux/action';
 import { Container, Row, Col, Button, Form, InputGroup } from 'react-bootstrap';
+import { BsCheck as CheckIcon } from 'react-icons/bs';
 import '../css/GroupEntry.css';
 import { isEmpty } from '../helper';
 
@@ -98,7 +99,7 @@ class GroupEntry extends Component {
             variant="outline-info"
             onClick={this.submitGroupName(groupNameForEdit)}
           >
-            submit
+            <CheckIcon />
           </Button>
         </InputGroup.Append>
       </InputGroup>
