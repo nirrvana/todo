@@ -10,6 +10,7 @@ import {
   UPDATE_TODO,
   SUBMIT_TODO,
   COMPLETE_TODO,
+  INCOMPLETE_TODO,
 } from './action';
 
 import Api from './api';
@@ -116,6 +117,16 @@ const reducer = (state = initialState, action) => {
     case COMPLETE_TODO:
       groupListData = JSON.parse(
         Api.completeTodo(selectedGroupIndex, action.index),
+      );
+      return {
+        ...state,
+        groupList: [...groupListData],
+        groupListForEdit: [...groupListData],
+      };
+
+    case INCOMPLETE_TODO:
+      groupListData = JSON.parse(
+        Api.incompleteTodo(selectedGroupIndex, action.index),
       );
       return {
         ...state,

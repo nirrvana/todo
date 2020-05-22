@@ -86,6 +86,34 @@ class TodoEntry extends Component {
     );
   };
 
+  renderCompletedTodo = () => {
+    const { index: todoIndex, todo, dispatchIncompleteTodo } = this.props;
+
+    return (
+      <Row
+        noGutters={true}
+        className="todo-entry-container__wrapper flex-nowrap"
+      >
+        <Col className="todo-entry-container__check-box-area">
+          <input
+            className="todo-entry-container__check-box"
+            type="checkbox"
+            checked={todo.completed}
+            onChange={() => dispatchIncompleteTodo(todoIndex)}
+          />
+        </Col>
+        <Col className="todo-entry-container__completed-content-area">
+          <div className="todo-entry-container__completed-content">
+            {todo.content}
+          </div>
+        </Col>
+        <Col className="todo-entry-container__delete-button-area">
+          {this.renderDeleteTodoButton()}
+        </Col>
+      </Row>
+    );
+  };
+
   renderDeleteTodoButton = () => {
     const {
       state: { isEditMode, isUpdateMode },
@@ -149,8 +177,12 @@ class TodoEntry extends Component {
 
     if (isUpdateMode) {
       return this.renderTodoInput();
-    } else if (!isUpdateMode && !todo.completed) {
-      return this.renderTodo();
+    } else {
+      if (todo.completed) {
+        return this.renderCompletedTodo();
+      } else {
+        return this.renderTodo();
+      }
     }
   };
 
@@ -186,6 +218,7 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchSubmitTodo: (index, content) =>
     dispatch(Action.submitTodo(index, content)),
   dispatchCompleteTodo: (index) => dispatch(Action.completeTodo(index)),
+  dispatchIncompleteTodo: (index) => dispatch(Action.incompleteTodo(index)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoEntry);

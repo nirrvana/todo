@@ -9,6 +9,7 @@ export const DELETE_TODO = 'DELETE_TODO';
 export const UPDATE_TODO = 'UPDATE_TODO';
 export const SUBMIT_TODO = 'SUBMIT_TODO';
 export const COMPLETE_TODO = 'COMPLETE_TODO';
+export const INCOMPLETE_TODO = 'INCOMPLETE_TODO';
 
 export default class Action {
   static getGroupList = () => ({
@@ -66,6 +67,11 @@ export default class Action {
 
   static completeTodo = (index) => ({
     type: COMPLETE_TODO,
+    index,
+  });
+
+  static incompleteTodo = (index) => ({
+    type: INCOMPLETE_TODO,
     index,
   });
 }

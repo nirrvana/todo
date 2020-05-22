@@ -113,4 +113,23 @@ export default class Api {
     localStorage.setItem('groupList', newGroupList);
     return newGroupList;
   };
+
+  static incompleteTodo = (selectedGroupIndex, todoIndex) => {
+    const oldGroupList = JSON.parse(localStorage.getItem('groupList'));
+    const newGroupList = JSON.stringify(
+      oldGroupList.map((group, index) =>
+        index === selectedGroupIndex
+          ? {
+              ...group,
+              todoList: group.todoList.map((todo, index) =>
+                index === todoIndex ? { ...todo, completed: false } : todo,
+              ),
+            }
+          : group,
+      ),
+    );
+
+    localStorage.setItem('groupList', newGroupList);
+    return newGroupList;
+  };
 }

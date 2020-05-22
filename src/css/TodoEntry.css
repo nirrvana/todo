@@ -45,6 +45,16 @@
   text-decoration: underline;
 }
 
+.todo-entry-container__completed-content-area {
+  max-width: 500px;
+}
+
+.todo-entry-container__completed-content {
+  color: gray;
+  text-decoration-color: gray;
+  text-decoration: line-through;
+}
+
 .todo-entry-container__form-control {
   max-width: 500px;
   padding: 0;
