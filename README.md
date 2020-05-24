@@ -1,68 +1,66 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# todo #
+해야 할 일들을 (로컬스토리지에) 메모할 수 있는 간단한 웹 앱
 
-## Available Scripts
+## 설치 ##
+* 방법1 : [github page](https://nirrvana.github.io/todo)
+* 방법2 : git clone https://github.com/nirrvana/todo.git
 
-In the project directory, you can run:
+## 사용방법 ##
+* Group
+  * 추가 :`Add Group` 클릭  → 그룹명 입력  → `V` 클릭 or 엔터  
+  * 삭제 : 그룹명 hover  → `X` 클릭
+  * 수정 : 그룹명 hover  → `rename` 클릭
 
-### `yarn start`
+* Todo
+  * 추가 : (todo를 추가 할) 그룹명 클릭  → `+` 클릭  → 내용 입력  → `V` 클릭 or 엔터
+  * 삭제 : todo 내용 hover  → `X` 클릭
+  * 수정 : todo 내용 클릭  → 내용 수정  → `V` 클릭 or 엔터
+  * 완료 : 체크박스 클릭 (완료된 목록으로 이동)
+  * 완료취소 : 완료된 목록에서 체크박스 클릭 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 코드상태 ##
+  서버가 없이 클라이언트 코드로만 작성되었으며, 서버의 Controller 역할을 Api.js가 대신
+  
+* GroupList  
+  * local storage에서 group list를 받아와 mapping하는 컴포넌트
+  * group 추가에 관한 부분 담당
+  * 수정계획
+    * 그룹명이 길어질 경우 영역 밖으로 튀어나오지 않고 ...처리 되도록
+    * 그룹명을 정확히 hover하지 않고 그룹명 포함 영역을 hover시 `x`, `rename`버튼 보이도록
+    * todo 작업 중인 때 그룹의 color를 바꾸어 주어 해당 그룹에서 작업 중임을 직관적으로 알 수 있도록
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+* GroupEntry
+  * list의 각 group 내용에 관한 부분을 담당하는 컴포넌트
+  * group 수정 및 삭제 부분 담당
+  * 수정계획
+    * event propagation api를 사용해 이벤트 전파를 컨트롤
+    * 그룹명이 길어질 영역 밖으로 튀어나오지 않고 ...처리 되도록
+    * 그룹명 수정 상태 때 해당 그룹의 color를 바꾸어 주어 해당 그룹에서 작업 중임을 직관적으로 알 수 있도록
+    * 그룹명 수정 시 뜨는 input창의 css 요소를 없애 input창에서 편집하는 느낌이 들지 않도록
+    * 그룹명 수정 시 뜨는 input창의 외부 영역 클릭 시 input 창이 닫히도록
+    
+* TodoList
+  * store에서 todo list를 받아와 mapping하는 컴포넌트
+  * todo 추가에 관한 부분 담당
+  * 수정계획
+    * 빈 todo 제출 시 뜨는 modal 창의 close 버튼을 눌러도 입력 중인 input 창이 닫히지 않도록
+    * todo가 길어질 경우 영역 밖으로 튀어나오지 않고 ...처리 되도록
+    * todo 추가 시 뜨는 input창의 css 요소를 없애 input창에서 편집하는 느낌이 들지 않도록
+    * todo 추가 시 뜨는 input창의 외부 영역 클릭 시 input 창이 닫히도록
+    
+* TodoEntry
+  * todo 수정 및 삭제 부분 담당
+  * 수정계획
+    * event propagation api를 사용해 이벤트 전파를 컨트롤
+    * todo가 길어질 경우 영역 밖으로 튀어나오지 않고 ...처리 되도록
+    * todo 수정 상태일 때 해당 todo의 color를 바꾸어 주어 해당 todo에서 작업 중임을 직관적으로 알 수 있도록
+    * todo 수정 시 뜨는 input창의 css 요소를 없애 input창에서 편집하는 느낌이 들지 않도록
+    * todo 수정 시 뜨는 input창의 외부 영역 클릭 시 input 창이 닫히도록
 
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+* 향후계획
+  * 각 컴포넌트 수정계획 리스트를 코드에 반영
+  * 작성된 todo 갯수 대비 완료된 todo 갯수를 표시할 수 있는 badge 추가
+  * 인증 과정 
+  * UI 업그레이드
+  * 코드리뷰 및 리팩토링
+  * 서버 코드를 작성하여 todo를 local storage 대신 db에 저장 (마지막)
